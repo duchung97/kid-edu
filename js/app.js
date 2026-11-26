@@ -100,9 +100,9 @@ window.KE = window.KE || {};
     if (!L) return go('#/s/' + sid);
     const levels = L.levels.map((lv, i) => {
       const open = unlocked(sid, lid, i), st = S.stars(sid, lid, i);
-      return `<a class="level-node ${open ? '' : 'locked'} ${st ? 'done' : ''}" ${open ? `href="#/s/${sid}/l/${lid}/p/${i}"` : ''}>
+      return `${lv.boss && i > 0 && !L.levels[i - 1].boss ? '<div class="boss-divider">⚔️ Khu vực Boss: bài toán tư duy</div>' : ''}<a class="level-node ${lv.boss ? 'boss' : ''} ${open ? '' : 'locked'} ${st ? 'done' : ''}" ${open ? `href="#/s/${sid}/l/${lid}/p/${i}"` : ''}>
         <span class="node-num">${open ? lv.icon : '🔒'}</span>
-        <span class="node-info"><b>Màn ${i + 1}: ${esc(lv.title)}</b><span class="node-stars">${starStr(st)}</span></span>
+        <span class="node-info"><b>${lv.boss ? '' : `Màn ${i + 1}: `}${esc(lv.title)}</b><span class="node-stars">${starStr(st)}</span></span>
       </a>`;
     }).join('');
 
@@ -124,7 +124,7 @@ window.KE = window.KE || {};
 
       <section class="panel">
         <div class="panel-head"><h2>🎮 Chơi qua màn</h2></div>
-        <p class="hint">Trả lời đúng ít nhất 3/5 câu để mở khoá màn tiếp theo. Đúng hết 5 câu được 3 sao!</p>
+        <p class="hint">Trả lời đúng ít nhất 3/5 câu để mở khoá màn tiếp theo. Đúng hết 5 câu được 3 sao! Vượt qua 5 màn sẽ gặp 3 Boss với các bài toán tư duy.</p>
         <div class="level-map">${levels}</div>
       </section>`;
 
@@ -162,7 +162,7 @@ window.KE = window.KE || {};
       $app.innerHTML = `
         <nav class="crumbs"><a href="#/s/${sid}/l/${lid}">‹ ${esc(L.title)}</a></nav>
         <div class="play-head">
-          <div class="play-title">${level.icon} Màn ${lvIdx + 1}: ${esc(level.title)}</div>
+          <div class="play-title ${level.boss ? 'boss' : ''}">${level.icon} ${level.boss ? '' : `Màn ${lvIdx + 1}: `}${esc(level.title)}</div>
           <div class="dots">${dots}</div>
         </div>
         <section class="panel question">
@@ -215,7 +215,7 @@ window.KE = window.KE || {};
       const stars = c === n ? 3 : c >= n - 1 ? 2 : c >= 3 ? 1 : 0;
       const before = S.stars(sid, lid, lvIdx);
       const lvBefore = S.level().lv;
-      const xp = c * 10 + (stars === 3 && before < 3 ? 20 : 0);
+      const xp = c * (level.boss ? 20 : 10) + (stars === 3 && before < 3 ? 20 : 0);
       S.addXp(xp);
       if (stars) S.setStars(sid, lid, lvIdx, stars);
       const lvAfter = S.level().lv;
@@ -262,10 +262,15 @@ window.KE = window.KE || {};
     KE.speech.stop();
     const parts = (location.hash.replace(/^#\/?/, '') || '').split('/').filter(Boolean);
     renderHeader();
-    if (parts[0] === 's' && parts[2] === 'l' && parts[4] === 'p') viewPlay(parts[1], parts[3], parts[5]);
-    else if (parts[0] === 's' && parts[2] === 'l') viewLesson(parts[1], parts[3]);
-    else if (parts[0] === 's') viewSubject(parts[1]);
+    let parent = null;
+    if (parts[0] === 's' && parts[2] === 'l' && parts[4] === 'p') { parent = `#/s/${parts[1]}/l/${parts[3]}`; viewPlay(parts[1], parts[3], parts[5]); }
+    else if (parts[0] === 's' && parts[2] === 'l') { parent = `#/s/${parts[1]}`; viewLesson(parts[1], parts[3]); }
+    else if (parts[0] === 's') { parent = '#/'; viewSubject(parts[1]); }
     else viewHome();
+    /* Nút quay lại cố định: về menu ngay phía trước */
+    const back = document.getElementById('backbar');
+    back.hidden = !parent;
+    if (parent) back.querySelector('a').setAttribute('href', parent);
     window.scrollTo(0, 0);
   }
   document.addEventListener('click', (e) => { if (e.target.closest('.btn, .card, .level-node')) KE.sound.click(); });

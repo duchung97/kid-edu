@@ -281,27 +281,256 @@ KE.subjects = KE.subjects || [];
   ];
   const QUESTIONS_PER_LEVEL = 5;
 
+  /* ============================================================
+     ĐẤU BOSS: bài toán tư duy khó hơn, dùng kiến thức của bài học
+     t = 1, 2, 3 (Boss càng về sau càng khó)
+     ============================================================ */
+  const ev = (op, x, y) => (op === '+' ? x + y : op === '−' ? x - y : x * y);
+  const numQ = (key, prompt, say, ans, extra, explain) => ({
+    key, prompt, say, small: true,
+    choices: U.numberChoices(ans, extra).map((x) => fmt(+x)),
+    answer: fmt(ans), explain,
+  });
+  function stepFor(M) {
+    if (M <= 10) return rand(1, 2);
+    if (M <= 20) return rand(2, 4);
+    if (M <= 100) return rand(3, 15);
+    if (M <= 1000) return rand(3, 15) * 10 + pick([0, 5]);
+    return rand(3, 15) * 100 + pick([0, 50]);
+  }
+  const unitFor = (M) => (M <= 100 ? pick([['viên bi', 'viên bi'], ['bông hoa', 'bông hoa'], ['nhãn vở', 'nhãn vở']]) : pick([['quyển sách', 'quyển sách'], ['cây xanh', 'cây'], ['viên gạch', 'viên gạch']]));
+
+  const B = {
+    /* Dãy tính nhiều bước */
+    chain(L, t) {
+      const M = L.max;
+      for (let k = 0; k < 400; k++) {
+        const lo = M >= 100 ? Math.floor(M / 20) : 1;
+        const a = rand(lo, M), b = rand(lo, M), c = rand(lo, M);
+        const ops = t >= 3 ? pick([['+', '−'], ['−', '+']]) : L.op === 'add' ? ['+', '+'] : ['−', '−'];
+        const x = ev(ops[0], a, b), r = ev(ops[1], x, c);
+        if (x < 0 || x > M || r < 0 || r > M || r === 0) continue;
+        const prompt = `${fmt(a)} ${ops[0]} ${fmt(b)} ${ops[1]} ${fmt(c)} = ?`;
+        return numQ(prompt, `<span class="boss-expr">${prompt}</span>`, `${a} ${ops[0]} ${b} ${ops[1]} ${c} bằng mấy?`, r,
+          [x, r + 1, r - 1, ev(ops[1] === '+' ? '−' : '+', x, c)],
+          `Với dãy tính chỉ có cộng, trừ, ta tính lần lượt <b>từ trái sang phải</b>:<br>• Bước 1: ${fmt(a)} ${ops[0]} ${fmt(b)} = ${fmt(x)}<br>• Bước 2: ${fmt(x)} ${ops[1]} ${fmt(c)} = <b>${fmt(r)}</b>`);
+      }
+      return null;
+    },
+
+    /* Quy luật dãy số */
+    seq(L, t) {
+      const M = L.max, s = stepFor(M), up = L.op === 'add';
+      const start = up ? rand(0, M - 4 * s) : rand(4 * s, M);
+      const terms = [0, 1, 2, 3, 4].map((i) => (up ? start + i * s : start - i * s));
+      const miss = t === 1 ? 4 : rand(1, 4);
+      const shown = terms.map((x, i) => (i === miss ? '<span class="blank">?</span>' : fmt(x))).join(', ');
+      return numQ('seq' + terms.join(), `Tìm quy luật rồi điền số còn thiếu:<br><span class="boss-expr">${shown}</span>`,
+        `Tìm quy luật rồi điền số còn thiếu: ${terms.map((x, i) => (i === miss ? 'mấy' : x)).join(', ')}`,
+        terms[miss], [terms[miss] + 1, terms[miss] - 1, up ? terms[miss] + s : terms[miss] - s, up ? terms[miss] - s : terms[miss] + s],
+        `Hai số liền nhau ${up ? 'hơn' : 'kém'} nhau ${fmt(s)} đơn vị (ví dụ ${fmt(terms[miss === 0 ? 1 : 0])} ${up ? '+' : '−'} ${fmt(s)} = ${fmt(terms[miss === 0 ? 2 : 1])}).<br>Mỗi số sau ${up ? 'cộng thêm' : 'bớt đi'} ${fmt(s)}, nên số cần điền là <b>${fmt(terms[miss])}</b>.<br>Dãy đầy đủ: ${terms.map(fmt).join(', ')}.`);
+    },
+
+    /* Bài toán nhiều hơn / ít hơn, có thể 2 bước */
+    moreLess(L, t) {
+      const M = L.max, up = L.op === 'add';
+      const [X, Y] = shuffle(NAMES).slice(0, 2);
+      const [unit] = unitFor(M);
+      const two = t >= 2;
+      for (let k = 0; k < 400; k++) {
+        const a = rand(M >= 100 ? Math.floor(M / 10) : 2, M), b = rand(1, M >= 100 ? Math.floor(M / 2) : Math.max(2, M / 2));
+        const y = up ? a + b : a - b;
+        const r = two ? a + y : y;
+        if (y <= 0 || y > M || r > M) continue;
+        const rel = up ? 'nhiều hơn' : 'ít hơn';
+        const q = `${X} có ${fmt(a)} ${unit}. ${Y} có ${rel} ${X} ${fmt(b)} ${unit}. ` + (two ? `Hỏi cả hai bạn có tất cả bao nhiêu ${unit}?` : `Hỏi ${Y} có bao nhiêu ${unit}?`);
+        let ex = `“${rel[0].toUpperCase() + rel.slice(1)}” nên ta làm phép ${up ? 'cộng' : 'trừ'}.<br>• ${two ? 'Bước 1: ' : ''}Số ${unit} của ${Y}: ${fmt(a)} ${up ? '+' : '−'} ${fmt(b)} = ${fmt(y)}`;
+        if (two) ex += `<br>• Bước 2: Cả hai bạn có: ${fmt(a)} + ${fmt(y)} = ${fmt(r)}`;
+        ex += `<br><span class="dap-so">Đáp số: ${fmt(r)} ${unit}.</span>`;
+        if (two) ex += `<div class="sub-explain">Bẫy thường gặp: chỉ tính số ${unit} của ${Y} (${fmt(y)}) mà quên cộng thêm của ${X}.</div>`;
+        return numQ(q, q, q, r, two ? [y, up ? a - b + a : a + b + a, a + b] : [up ? a - b : a + b, y + 1, y - 1], ex);
+      }
+      return null;
+    },
+
+    /* Cân bằng hai vế */
+    balance(L, t) {
+      const M = L.max;
+      for (let k = 0; k < 400; k++) {
+        const lo = M >= 100 ? Math.floor(M / 20) : 1;
+        const a = rand(lo, M), b = rand(lo, M), c = rand(lo, M);
+        let right, ans, prompt, ex;
+        if (L.op === 'add') {
+          right = b + c; ans = right - a;
+          if (right > M || ans <= 0) continue;
+          prompt = `${fmt(a)} + ? = ${fmt(b)} + ${fmt(c)}`;
+          ex = `Tính vế phải trước: ${fmt(b)} + ${fmt(c)} = ${fmt(right)}.<br>Vậy ${fmt(a)} + ? = ${fmt(right)}, số cần tìm là ${fmt(right)} − ${fmt(a)} = <b>${fmt(ans)}</b>.`;
+        } else {
+          right = b - c; ans = a - right;
+          if (right <= 0 || ans <= 0 || a > M) continue;
+          prompt = `${fmt(a)} − ? = ${fmt(b)} − ${fmt(c)}`;
+          ex = `Tính vế phải trước: ${fmt(b)} − ${fmt(c)} = ${fmt(right)}.<br>Vậy ${fmt(a)} − ? = ${fmt(right)}, số cần tìm là ${fmt(a)} − ${fmt(right)} = <b>${fmt(ans)}</b>.`;
+        }
+        return numQ(prompt, `Hai bên bằng nhau. Tìm số thay cho dấu hỏi:<br><span class="boss-expr">${prompt}</span>`,
+          `Hai bên bằng nhau. ${prompt.replace('?', 'mấy')}`, ans, [right, ans + 1, ans - 1, ans + 10], ex);
+      }
+      return null;
+    },
+
+    /* Đố vui hình con vật / trái cây */
+    symbols(L, t) {
+      const M = L.max;
+      const [P, Q2] = shuffle(['🍎', '🍌', '🐱', '🐶', '⭐', '🌸']).slice(0, 2);
+      for (let k = 0; k < 400; k++) {
+        const x = rand(1, Math.floor(M / 2)), y = rand(1, M);
+        const s = L.op === 'add' ? x + y : x - y;
+        if (s <= 0 || s > M) continue;
+        const sg = L.op === 'add' ? '+' : '−';
+        const prompt = `${P} + ${P} = ${fmt(2 * x)}<br>${P} ${sg} ${Q2} = ${fmt(s)}<br>Hỏi ${Q2} = ?`;
+        return numQ('sym' + x + y, `<span class="boss-expr">${prompt}</span>`, `Hai hình giống nhau cộng lại bằng ${2 * x}. Hình thứ nhất ${sg} hình thứ hai bằng ${s}. Hỏi hình thứ hai bằng mấy?`,
+          y, [x, s, 2 * x, y + 1],
+          `• ${P} + ${P} = ${fmt(2 * x)}, hai số giống nhau cộng lại bằng ${fmt(2 * x)} nên ${P} = ${fmt(x)} (vì ${fmt(x)} + ${fmt(x)} = ${fmt(2 * x)}).<br>• ${fmt(x)} ${sg} ${Q2} = ${fmt(s)} nên ${Q2} = ${L.op === 'add' ? `${fmt(s)} − ${fmt(x)}` : `${fmt(x)} − ${fmt(s)}`} = <b>${fmt(y)}</b>.`);
+      }
+      return null;
+    },
+
+    /* Bài toán tuổi (chỉ cho bài số nhỏ) */
+    age(L, t) {
+      for (let k = 0; k < 400; k++) {
+        const a = rand(5, 12), b = rand(2, 6), c = rand(1, 5);
+        if (L.op === 'add') {
+          const r = a + b + c;
+          if (r > Math.max(20, L.max)) continue;
+          const q = `Năm nay em ${a} tuổi. Anh hơn em ${b} tuổi. Hỏi ${c} năm nữa anh bao nhiêu tuổi?`;
+          return numQ(q, q, q, r, [a + b, a + c, r + 1, r - 1],
+            `• Bước 1: Năm nay anh: ${a} + ${b} = ${a + b} tuổi.<br>• Bước 2: ${c} năm nữa anh: ${a + b} + ${c} = ${r} tuổi.<br><span class="dap-so">Đáp số: ${r} tuổi.</span>`);
+        }
+        const r = a - b - c;
+        if (r < 1 || a > Math.max(20, L.max)) continue;
+        const q = `Năm nay anh ${a} tuổi. Em kém anh ${b} tuổi. Hỏi ${c} năm trước em bao nhiêu tuổi?`;
+        return numQ(q, q, q, r, [a - b, a - c, r + 1, r + 2],
+          `• Bước 1: Năm nay em: ${a} − ${b} = ${a - b} tuổi.<br>• Bước 2: ${c} năm trước em: ${a - b} − ${c} = ${r} tuổi.<br><span class="dap-so">Đáp số: ${r} tuổi.</span>`);
+      }
+      return null;
+    },
+
+    /* ---------- Boss phép nhân ---------- */
+    mseq(L, t) {
+      const [a] = L.bossPair(t);
+      const k0 = a >= 10 ? 1 : rand(1, 5);
+      const terms = [0, 1, 2, 3, 4].map((i) => a * (k0 + i));
+      const miss = t === 1 ? 4 : rand(1, 4);
+      const shown = terms.map((x, i) => (i === miss ? '<span class="blank">?</span>' : fmt(x))).join(', ');
+      return numQ('mseq' + terms.join(), `Tìm quy luật rồi điền số còn thiếu:<br><span class="boss-expr">${shown}</span>`,
+        `Tìm quy luật rồi điền số còn thiếu: ${terms.map((x, i) => (i === miss ? 'mấy' : x)).join(', ')}`,
+        terms[miss], [terms[miss] + 1, terms[miss] - 1, terms[miss] + a, terms[miss] - a],
+        `Mỗi số sau hơn số trước ${fmt(a)} đơn vị, đó là ${fmt(a)} nhân lần lượt với ${k0}, ${k0 + 1}, ${k0 + 2}...: ${terms.map((x, i) => `${fmt(a)} × ${k0 + i} = ${fmt(x)}`).join('; ')}.<br>Số cần điền là <b>${fmt(terms[miss])}</b>.`);
+    },
+    mulAdd(L, t) {
+      const [a, b] = L.bossPair(t);
+      const p = a * b;
+      const plus = t === 1 ? true : Math.random() < 0.5;
+      const c = plus ? rand(2, Math.max(3, Math.floor(p / 2))) : rand(1, p - 1);
+      const r = plus ? p + c : p - c;
+      const sg = plus ? '+' : '−';
+      const prompt = `${fmt(a)} × ${b} ${sg} ${fmt(c)} = ?`;
+      const wrong = plus ? a * (b + c) : a * Math.max(1, b - c);
+      return numQ(prompt, `<span class="boss-expr">${prompt}</span>`, `${a} nhân ${b} ${sg} ${c} bằng mấy?`, r, [wrong, p, r + 1, r - 1],
+        `Trong dãy tính có nhân và ${plus ? 'cộng' : 'trừ'}, ta <b>nhân trước, ${plus ? 'cộng' : 'trừ'} sau</b>:<br>• Bước 1: ${fmt(a)} × ${b} = ${fmt(p)}<br>• Bước 2: ${fmt(p)} ${sg} ${fmt(c)} = <b>${fmt(r)}</b>`);
+    },
+    legs(L, t) {
+      const g = rand(2, 9), d = rand(2, 9);
+      const r = g * 2 + d * 4;
+      const q = `Trong sân có ${g} con gà và ${d} con chó. Hỏi có tất cả bao nhiêu cái chân?`;
+      return numQ(q, q, q, r, [(g + d) * 2, (g + d) * 4, g * 2, d * 4, r + 2],
+        `Mỗi con gà có 2 chân, mỗi con chó có 4 chân.<br>• Chân gà: 2 × ${g} = ${g * 2}<br>• Chân chó: 4 × ${d} = ${d * 4}<br>• Tất cả: ${g * 2} + ${d * 4} = ${r}<br><span class="dap-so">Đáp số: ${r} cái chân.</span>`);
+    },
+    twoStep(L, t) {
+      const [a, b] = L.bossPair(t);
+      const p = a * b;
+      const c = rand(1, Math.max(1, p - 1));
+      const r = p - c;
+      const q = `Mỗi hộp có ${fmt(a)} cái bút chì. Cô giáo mua ${b} hộp rồi phát cho học sinh ${fmt(c)} cái. Hỏi cô còn lại bao nhiêu cái bút chì?`;
+      return numQ(q, q, q, r, [p, p + c, r + 1, r - 1, a * b - a],
+        `• Bước 1: Số bút trong ${b} hộp: ${fmt(a)} × ${b} = ${fmt(p)} cái.<br>• Bước 2: Số bút còn lại: ${fmt(p)} − ${fmt(c)} = ${fmt(r)} cái.<br><span class="dap-so">Đáp số: ${fmt(r)} cái bút chì.</span>`);
+    },
+    symbolsMul(L, t) {
+      const [a, b] = L.bossPair(t);
+      const c = rand(2, 9);
+      const S = pick(['⭐', '🍎', '🐱']);
+      const prompt = `${S} × ${b} = ${a * b}<br>Hỏi ${S} + ${c} = ?`;
+      return numQ('symm' + a + b + c, `<span class="boss-expr">${prompt}</span>`, `Một hình nhân ${b} bằng ${a * b}. Hỏi hình đó cộng ${c} bằng mấy?`,
+        a + c, [a * b + c, a, b + c, a + c + 1],
+        `• ${S} × ${b} = ${a * b}. Nhẩm bảng nhân: ${a} × ${b} = ${a * b}, nên ${S} = ${a}.<br>• ${S} + ${c} = ${a} + ${c} = <b>${a + c}</b>.`);
+    },
+    maxProduct(L, t) {
+      const opts = [], seen = new Set();
+      for (let k = 0; k < 300 && opts.length < 4; k++) {
+        const p = L.bossPair(t);
+        const v = p[0] * p[1];
+        if (!seen.has(v)) { seen.add(v); opts.push(p); }
+      }
+      const best = opts.reduce((m, p) => (p[0] * p[1] > m[0] * m[1] ? p : m));
+      const label = (p) => `${fmt(p[0])} × ${p[1]}`;
+      return {
+        key: 'max' + opts.map(label).join(), small: true,
+        prompt: 'Phép nhân nào có kết quả <b>lớn nhất</b>?', say: 'Phép nhân nào có kết quả lớn nhất?',
+        choices: shuffle(opts.map(label)), answer: label(best),
+        explain: `Tính từng phép nhân rồi so sánh:<br>• ${opts.map((p) => `${label(p)} = ${fmt(p[0] * p[1])}${p === best ? ' ✔ lớn nhất' : ''}`).join('<br>• ')}`,
+      };
+    },
+  };
+
+  const BOSS_PLAN = {
+    addsub: {
+      1: ['chain', 'seq', 'moreLess', 'chain', 'seq'],
+      2: ['balance', 'moreLess', 'seq', 'chain', 'balance'],
+      3: ['symbols', 'balance', 'chain', 'moreLess', 'age'],
+    },
+    mul: {
+      1: ['mseq', 'mulAdd', 'twoStep', 'mseq', 'maxProduct'],
+      2: ['mulAdd', 'legs', 'twoStep', 'maxProduct', 'mseq'],
+      3: ['legs', 'symbolsMul', 'twoStep', 'mulAdd', 'maxProduct'],
+    },
+  };
+  const BOSSES = [
+    { title: 'Đấu Boss 1', icon: '👾', tier: 1 },
+    { title: 'Đấu Boss 2', icon: '🐲', tier: 2 },
+    { title: 'Đấu Boss 3', icon: '👹', tier: 3 },
+  ];
+  function bossTypes(L, t) {
+    let types = BOSS_PLAN[L.op === 'mul' ? 'mul' : 'addsub'][t].slice();
+    if (L.op !== 'mul' && L.max > 20) types = types.map((x) => (x === 'age' ? 'symbols' : x));
+    if (L.op === 'mul' && L.bigMul) types = types.map((x) => (x === 'legs' ? 'twoStep' : x === 'symbolsMul' ? 'mulAdd' : x));
+    return types;
+  }
+
+  function buildSet(types, gen) {
+    const out = [], seen = new Set();
+    const order = shuffle(Array.from({ length: QUESTIONS_PER_LEVEL }, (_, i) => types[i % types.length]));
+    for (const t of order) {
+      let q;
+      for (let k = 0; k < 30; k++) { q = gen(t); if (q && !seen.has(q.key)) break; }
+      if (!q) q = gen(types[0]) || gen(types[1]);
+      seen.add(q.key);
+      out.push(q);
+    }
+    return out;
+  }
+
   function makeLevels(L) {
-    return PLAN.map((p, d) => {
+    const normal = PLAN.map((p, d) => {
       let types = p.types.map((t) => (L.typeMap && L.typeMap[t]) || t);
       if (L.extraTypes && L.extraTypes[d]) types = L.extraTypes[d];
-      return {
-        title: p.title,
-        icon: p.icon,
-        build() {
-          const out = [];
-          const seen = new Set();
-          const order = shuffle(Array.from({ length: QUESTIONS_PER_LEVEL }, (_, i) => types[i % types.length]));
-          for (const t of order) {
-            let q;
-            for (let k = 0; k < 30; k++) { q = Q[t](L, d); if (!seen.has(q.key)) break; }
-            seen.add(q.key);
-            out.push(q);
-          }
-          return out;
-        },
-      };
+      return { title: p.title, icon: p.icon, build: () => buildSet(types, (t) => Q[t](L, d)) };
     });
+    // Boss phép nhân: tránh các phép quá dễ (nhân với 1, 2)
+    if (!L.bossPair) L.bossPair = () => { let p; for (let k = 0; k < 50; k++) { p = L.pair(4); if (p[1] >= 3) break; } return p; };
+    const boss = BOSSES.map((b) => ({
+      title: b.title, icon: b.icon, boss: true,
+      build: () => buildSet(bossTypes(L, b.tier), (t) => B[t](L, b.tier)),
+    }));
+    return normal.concat(boss);
   }
 
   const pairFromAdd = (fn) => (d) => { const [x, y] = fn(d); return [x + y, y]; };
@@ -310,7 +539,7 @@ KE.subjects = KE.subjects || [];
   const LESSONS = [
     /* ===== PHÉP CỘNG ===== */
     {
-      id: 'cong-10', group: 'add', op: 'add', grade: 'Lớp 1', title: 'Cộng trong phạm vi 10', small: true, visual: true,
+      id: 'cong-10', max: 10, group: 'add', op: 'add', grade: 'Lớp 1', title: 'Cộng trong phạm vi 10', small: true, visual: true,
       pair: (d) => { const max = d < 1 ? 5 : 10; const a = rand(1, max - 1); return [a, rand(1, max - a)]; },
       theory: [
         { t: 'Phép cộng là gộp lại. Khi gộp hai nhóm đồ vật với nhau, ta dùng phép cộng.', ex: () => visual('add', 3, 2) },
@@ -322,7 +551,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-20', group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 20', small: true,
+      id: 'cong-20', max: 20, group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 20', small: true,
       pair: (d) => {
         if (d === 0) { const a = rand(11, 17); return [a, rand(1, 9 - (a % 10))]; }
         const a = rand(2, 9); const b = rand(11 - a, 9);
@@ -337,7 +566,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-100', group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 100',
+      id: 'cong-100', max: 100, group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 100',
       pair: (d) => [genAdd(2, false, 1), genAdd(2, false, 2), genAdd(2, true, 1), genAdd(2, true, 2), genAdd(2, true, 2)][d],
       theory: [
         { t: 'Số có hai chữ số gồm hàng chục và hàng đơn vị. Ví dụ 47 gồm 4 chục và 7 đơn vị.' },
@@ -349,7 +578,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-1000', group: 'add', op: 'add', grade: 'Lớp 2 – 3', title: 'Cộng trong phạm vi 1000',
+      id: 'cong-1000', max: 1000, group: 'add', op: 'add', grade: 'Lớp 2 – 3', title: 'Cộng trong phạm vi 1000',
       pair: (d) => [genAdd(3, false, 2), genAdd(3, false, 3), genAdd(3, true, 2), genAdd(3, true, 3), genAdd(3, true, 3)][d],
       theory: [
         { t: 'Số có ba chữ số gồm hàng trăm, hàng chục và hàng đơn vị. Ví dụ 352 gồm 3 trăm, 5 chục và 2 đơn vị.' },
@@ -360,7 +589,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-10000', group: 'add', op: 'add', grade: 'Lớp 3', title: 'Cộng trong phạm vi 10 000',
+      id: 'cong-10000', max: 10000, group: 'add', op: 'add', grade: 'Lớp 3', title: 'Cộng trong phạm vi 10 000',
       pair: (d) => [genAdd(4, false, 3), genAdd(4, false, 4), genAdd(4, true, 3), genAdd(4, true, 4), genAdd(4, true, 4)][d],
       theory: [
         { t: 'Số có bốn chữ số gồm hàng nghìn, hàng trăm, hàng chục và hàng đơn vị. Ví dụ 4 725 gồm 4 nghìn, 7 trăm, 2 chục và 5 đơn vị.' },
@@ -372,7 +601,7 @@ KE.subjects = KE.subjects || [];
 
     /* ===== PHÉP TRỪ ===== */
     {
-      id: 'tru-10', group: 'sub', op: 'sub', grade: 'Lớp 1', title: 'Trừ trong phạm vi 10', small: true, visual: true,
+      id: 'tru-10', max: 10, group: 'sub', op: 'sub', grade: 'Lớp 1', title: 'Trừ trong phạm vi 10', small: true, visual: true,
       pair: pairFromAdd((d) => { const max = d < 1 ? 5 : 10; const a = rand(1, max - 1); return [a, rand(1, max - a)]; }),
       theory: [
         { t: 'Phép trừ là bớt đi. Khi có một nhóm đồ vật rồi lấy bớt đi một số, ta dùng phép trừ.', ex: () => visual('sub', 5, 2) },
@@ -383,7 +612,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-20', group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 20', small: true,
+      id: 'tru-20', max: 20, group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 20', small: true,
       pair: pairFromAdd((d) => {
         if (d === 0) { const a = rand(11, 17); return [a, rand(1, 9 - (a % 10))]; }
         const a = rand(2, 9); return [a, rand(11 - a, 9)];
@@ -396,7 +625,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-100', group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 100',
+      id: 'tru-100', max: 100, group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 100',
       pair: pairFromAdd((d) => [genAdd(2, false, 1), genAdd(2, false, 2), genAdd(2, true, 1), genAdd(2, true, 2), genAdd(2, true, 2)][d]),
       theory: [
         { t: 'Phép trừ có ba thành phần: số bị trừ, số trừ và hiệu. Ví dụ 58 − 23 = 35: 58 là số bị trừ, 23 là số trừ, 35 là hiệu.' },
@@ -406,7 +635,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-1000', group: 'sub', op: 'sub', grade: 'Lớp 2 – 3', title: 'Trừ trong phạm vi 1000',
+      id: 'tru-1000', max: 1000, group: 'sub', op: 'sub', grade: 'Lớp 2 – 3', title: 'Trừ trong phạm vi 1000',
       pair: pairFromAdd((d) => [genAdd(3, false, 2), genAdd(3, false, 3), genAdd(3, true, 2), genAdd(3, true, 3), genAdd(3, true, 3)][d]),
       theory: [
         { t: 'Trừ các số có ba chữ số: đặt tính thẳng cột theo hàng trăm, hàng chục, hàng đơn vị, rồi trừ từ phải sang trái.' },
@@ -416,7 +645,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-10000', group: 'sub', op: 'sub', grade: 'Lớp 3', title: 'Trừ trong phạm vi 10 000',
+      id: 'tru-10000', max: 10000, group: 'sub', op: 'sub', grade: 'Lớp 3', title: 'Trừ trong phạm vi 10 000',
       pair: pairFromAdd((d) => [genAdd(4, false, 3), genAdd(4, false, 4), genAdd(4, true, 3), genAdd(4, true, 4), genAdd(4, true, 4)][d]),
       theory: [
         { t: 'Trừ các số có bốn chữ số cũng làm như vậy: đặt tính thẳng cột, trừ từ phải sang trái, nhớ khi cần.' },
@@ -472,7 +701,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'nhan-nhieu-chu-so', group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Nhân số có 2, 3 chữ số với số có 1 chữ số',
+      id: 'nhan-nhieu-chu-so', bigMul: true, bossPair: (t) => [genMul(2, true), genMul(3, false), genMul(3, true)][t - 1], group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Nhân số có 2, 3 chữ số với số có 1 chữ số',
       pair: (d) => [genMul(2, false), genMul(2, true), genMul(3, false), genMul(3, true), genMul(3, true)][d],
       typeMap: { missing: 'calc' },
       theory: [

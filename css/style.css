@@ -186,8 +186,22 @@ a.card[href]:hover { transform: translateY(-3px); border-color: var(--gold); box
 .levelup { display: inline-block; margin: 10px 0; padding: 8px 18px; border-radius: 999px; background: linear-gradient(180deg, var(--gold2), var(--gold)); color: #1a1300; font-weight: 800; font-size: 22px; animation: pop .6s; }
 .result-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 
+/* ---------- Boss ---------- */
+.boss-divider { margin: 10px 0 2px; text-align: center; color: #ff8a65; font-weight: 800; font-size: 18px; border-top: 1px dashed #5a2a1a; padding-top: 12px; }
+.level-node.boss { border-color: #7a2e1a; background: linear-gradient(90deg, #2a1208, #1a1a1a); }
+.level-node.boss .node-num { background: #3a1208; border-color: #ff7043; }
+.level-node.boss.done { border-color: var(--gold); }
+.play-title.boss { color: #ff8a65; }
+.boss-expr { display: inline-block; font-size: 30px; font-weight: 800; margin-top: 6px; line-height: 1.4; }
+
+/* ---------- Nút quay lại cố định ---------- */
+#backbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; justify-content: center; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: linear-gradient(180deg, rgba(11,11,11,0), rgba(11,11,11,.95) 40%); pointer-events: none; }
+#backbar[hidden] { display: none; }
+#backbar .back-btn { pointer-events: auto; min-width: 200px; font-size: 20px; padding: 10px 28px; box-shadow: 0 6px 24px rgba(0,0,0,.6); }
+
+
 /* ---------- Toast & confetti ---------- */
-.toast { position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 30px); opacity: 0; background: #241e0c; color: var(--gold2); border: 1px solid var(--gold); border-radius: 14px; padding: 10px 18px; max-width: min(92vw, 520px); z-index: 50; transition: .3s; font-size: 16px; }
+.toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 30px); opacity: 0; background: #241e0c; color: var(--gold2); border: 1px solid var(--gold); border-radius: 14px; padding: 10px 18px; max-width: min(92vw, 520px); z-index: 50; transition: .3s; font-size: 16px; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 40; overflow: hidden; }
 .confetti i { position: absolute; top: -20px; width: 10px; height: 14px; border-radius: 2px; animation: fall 2.6s linear forwards; }
@@ -212,3 +226,5 @@ a.card[href]:hover { transform: translateY(-3px); border-color: var(--gold); box
   .column { font-size: 22px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+body:has(#backbar:not([hidden])) main { padding-bottom: 110px; }
+#feedback { scroll-margin-bottom: 110px; }

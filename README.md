@@ -14,7 +14,10 @@ Mỗi bài gồm:
 
 1. **Lý thuyết có giọng đọc** – bấm 🔊 để nghe cả bài hoặc từng đoạn (dùng giọng tiếng Việt có sẵn của máy).
 2. **5 màn chơi trắc nghiệm** – Khởi động → Tăng tốc → Tìm số bí ẩn → Giải toán có lời văn → Thử thách Vàng. Câu hỏi được tạo ngẫu nhiên nên mỗi lần chơi là một đề mới.
-3. **Đáp án và giải thích** hiện ngay dưới mỗi câu (cách đếm, tách số tròn chục, đặt tính cột có nhớ...).
+3. **3 màn Đấu Boss** – bài toán tư duy khó hơn dùng kiến thức của bài: dãy tính nhiều bước, tìm quy luật dãy số, bài toán nhiều hơn/ít hơn hai bước, cân bằng hai vế, đố vui hình, bài toán tuổi, đếm chân gà chó, nhân trước cộng sau... Mỗi câu đúng ở màn Boss được +20 XP.
+4. **Đáp án và giải thích** hiện ngay dưới mỗi câu (cách đếm, tách số tròn chục, đặt tính cột có nhớ...).
+
+Nút **‹ Quay lại** cố định dưới màn hình đưa bé về menu ngay trước đó.
 
 Đúng ≥ 3/5 câu để mở khoá màn tiếp theo, đúng 5/5 được 3 sao. Mỗi câu đúng +10 XP để bé lên cấp. Tiến độ lưu trong trình duyệt của máy (localStorage).
 
