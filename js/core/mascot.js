@@ -1,11 +1,11 @@
 /* ============================================================
-   LINH VẬT "BON": chú khỉ nhỏ do Bé Vui Học tự thiết kế.
-   Bé lên cấp thì Bon nhận thêm đồ trang trí.
+   LINH VẬT "KHỈ MẬP": chú khỉ nhỏ do Bé Vui Học tự thiết kế.
+   Bé lên cấp thì Khỉ Mập nhận thêm đồ trang trí.
    ============================================================ */
 window.KE = window.KE || {};
 
 KE.mascot = (function () {
-  const NAME = 'Bon';
+  const NAME = 'Khỉ Mập';
   /* Đồ trang trí mở khoá theo cấp */
   const ITEMS = [
     { lv: 2, id: 'scarf', name: 'Khăn quàng đỏ', icon: '🧣' },
@@ -26,7 +26,7 @@ KE.mascot = (function () {
     const h = (id) => has(lv, id);
     const uid = 'm' + Math.random().toString(36).slice(2, 7);
     const s = [];
-    s.push(`<svg class="mascot ${h('halo') ? 'floaty' : ''}" viewBox="0 0 220 250" width="${size || 160}" height="${(size || 160) * 250 / 220}" role="img" aria-label="Khỉ ${NAME}">`);
+    s.push(`<svg class="mascot ${h('halo') ? 'floaty' : ''}" viewBox="0 0 220 250" width="${size || 160}" height="${(size || 160) * 250 / 220}" role="img" aria-label="${NAME}">`);
     s.push(`<defs>
       <radialGradient id="${uid}a" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#7c5cff" stop-opacity=".55"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/></radialGradient>
       <linearGradient id="${uid}c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e53935"/><stop offset="1" stop-color="#8e1b1b"/></linearGradient>

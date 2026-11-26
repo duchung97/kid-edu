@@ -539,7 +539,7 @@ KE.subjects = KE.subjects || [];
   const LESSONS = [
     /* ===== PHÉP CỘNG ===== */
     {
-      id: 'cong-10', max: 10, group: 'add', op: 'add', grade: 'Lớp 1', title: 'Cộng trong phạm vi 10', small: true, visual: true,
+      id: 'cong-10', sym: '+10', max: 10, group: 'add', op: 'add', grade: 'Lớp 1', title: 'Cộng trong phạm vi 10', small: true, visual: true,
       pair: (d) => { const max = d < 1 ? 5 : 10; const a = rand(1, max - 1); return [a, rand(1, max - a)]; },
       theory: [
         { t: 'Phép cộng là gộp lại. Khi gộp hai nhóm đồ vật với nhau, ta dùng phép cộng.', ex: () => visual('add', 3, 2) },
@@ -551,7 +551,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-20', max: 20, group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 20', small: true,
+      id: 'cong-20', sym: '+20', max: 20, group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 20', small: true,
       pair: (d) => {
         if (d === 0) { const a = rand(11, 17); return [a, rand(1, 9 - (a % 10))]; }
         const a = rand(2, 9); const b = rand(11 - a, 9);
@@ -566,7 +566,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-100', max: 100, group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 100',
+      id: 'cong-100', sym: '+100', max: 100, group: 'add', op: 'add', grade: 'Lớp 1 – 2', title: 'Cộng trong phạm vi 100',
       pair: (d) => [genAdd(2, false, 1), genAdd(2, false, 2), genAdd(2, true, 1), genAdd(2, true, 2), genAdd(2, true, 2)][d],
       theory: [
         { t: 'Số có hai chữ số gồm hàng chục và hàng đơn vị. Ví dụ 47 gồm 4 chục và 7 đơn vị.' },
@@ -578,7 +578,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-1000', max: 1000, group: 'add', op: 'add', grade: 'Lớp 2 – 3', title: 'Cộng trong phạm vi 1000',
+      id: 'cong-1000', sym: '+1000', max: 1000, group: 'add', op: 'add', grade: 'Lớp 2 – 3', title: 'Cộng trong phạm vi 1000',
       pair: (d) => [genAdd(3, false, 2), genAdd(3, false, 3), genAdd(3, true, 2), genAdd(3, true, 3), genAdd(3, true, 3)][d],
       theory: [
         { t: 'Số có ba chữ số gồm hàng trăm, hàng chục và hàng đơn vị. Ví dụ 352 gồm 3 trăm, 5 chục và 2 đơn vị.' },
@@ -589,7 +589,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'cong-10000', max: 10000, group: 'add', op: 'add', grade: 'Lớp 3', title: 'Cộng trong phạm vi 10 000',
+      id: 'cong-10000', sym: '+10k', max: 10000, group: 'add', op: 'add', grade: 'Lớp 3', title: 'Cộng trong phạm vi 10 000',
       pair: (d) => [genAdd(4, false, 3), genAdd(4, false, 4), genAdd(4, true, 3), genAdd(4, true, 4), genAdd(4, true, 4)][d],
       theory: [
         { t: 'Số có bốn chữ số gồm hàng nghìn, hàng trăm, hàng chục và hàng đơn vị. Ví dụ 4 725 gồm 4 nghìn, 7 trăm, 2 chục và 5 đơn vị.' },
@@ -601,7 +601,7 @@ KE.subjects = KE.subjects || [];
 
     /* ===== PHÉP TRỪ ===== */
     {
-      id: 'tru-10', max: 10, group: 'sub', op: 'sub', grade: 'Lớp 1', title: 'Trừ trong phạm vi 10', small: true, visual: true,
+      id: 'tru-10', sym: '−10', max: 10, group: 'sub', op: 'sub', grade: 'Lớp 1', title: 'Trừ trong phạm vi 10', small: true, visual: true,
       pair: pairFromAdd((d) => { const max = d < 1 ? 5 : 10; const a = rand(1, max - 1); return [a, rand(1, max - a)]; }),
       theory: [
         { t: 'Phép trừ là bớt đi. Khi có một nhóm đồ vật rồi lấy bớt đi một số, ta dùng phép trừ.', ex: () => visual('sub', 5, 2) },
@@ -612,7 +612,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-20', max: 20, group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 20', small: true,
+      id: 'tru-20', sym: '−20', max: 20, group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 20', small: true,
       pair: pairFromAdd((d) => {
         if (d === 0) { const a = rand(11, 17); return [a, rand(1, 9 - (a % 10))]; }
         const a = rand(2, 9); return [a, rand(11 - a, 9)];
@@ -625,7 +625,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-100', max: 100, group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 100',
+      id: 'tru-100', sym: '−100', max: 100, group: 'sub', op: 'sub', grade: 'Lớp 1 – 2', title: 'Trừ trong phạm vi 100',
       pair: pairFromAdd((d) => [genAdd(2, false, 1), genAdd(2, false, 2), genAdd(2, true, 1), genAdd(2, true, 2), genAdd(2, true, 2)][d]),
       theory: [
         { t: 'Phép trừ có ba thành phần: số bị trừ, số trừ và hiệu. Ví dụ 58 − 23 = 35: 58 là số bị trừ, 23 là số trừ, 35 là hiệu.' },
@@ -635,7 +635,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-1000', max: 1000, group: 'sub', op: 'sub', grade: 'Lớp 2 – 3', title: 'Trừ trong phạm vi 1000',
+      id: 'tru-1000', sym: '−1000', max: 1000, group: 'sub', op: 'sub', grade: 'Lớp 2 – 3', title: 'Trừ trong phạm vi 1000',
       pair: pairFromAdd((d) => [genAdd(3, false, 2), genAdd(3, false, 3), genAdd(3, true, 2), genAdd(3, true, 3), genAdd(3, true, 3)][d]),
       theory: [
         { t: 'Trừ các số có ba chữ số: đặt tính thẳng cột theo hàng trăm, hàng chục, hàng đơn vị, rồi trừ từ phải sang trái.' },
@@ -645,7 +645,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'tru-10000', max: 10000, group: 'sub', op: 'sub', grade: 'Lớp 3', title: 'Trừ trong phạm vi 10 000',
+      id: 'tru-10000', sym: '−10k', max: 10000, group: 'sub', op: 'sub', grade: 'Lớp 3', title: 'Trừ trong phạm vi 10 000',
       pair: pairFromAdd((d) => [genAdd(4, false, 3), genAdd(4, false, 4), genAdd(4, true, 3), genAdd(4, true, 4), genAdd(4, true, 4)][d]),
       theory: [
         { t: 'Trừ các số có bốn chữ số cũng làm như vậy: đặt tính thẳng cột, trừ từ phải sang trái, nhớ khi cần.' },
@@ -656,7 +656,7 @@ KE.subjects = KE.subjects || [];
 
     /* ===== PHÉP NHÂN ===== */
     {
-      id: 'nhan-gioi-thieu', group: 'mul', op: 'mul', grade: 'Lớp 2', title: 'Phép nhân là gì?', visual: true,
+      id: 'nhan-gioi-thieu', sym: '×?', group: 'mul', op: 'mul', grade: 'Lớp 2', title: 'Phép nhân là gì?', visual: true,
       pair: (d) => [rand(2, 5), d === 0 ? rand(2, 3) : rand(2, 5)],
       extraTypes: [['toMul'], ['fromMul', 'toMul'], ['calc'], ['word', 'word', 'calc'], ['toMul', 'fromMul', 'calc', 'word', 'missing']],
       theory: [
@@ -668,7 +668,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'bang-nhan-2-5', group: 'mul', op: 'mul', grade: 'Lớp 2', title: 'Bảng nhân 2 và 5',
+      id: 'bang-nhan-2-5', sym: '×2 ×5', group: 'mul', op: 'mul', grade: 'Lớp 2', title: 'Bảng nhân 2 và 5',
       pair: (d) => [d === 0 ? 2 : d === 1 ? 5 : pick([2, 5]), rand(1, 10)],
       theory: [
         { t: 'Bảng nhân 2: mỗi lần thêm 2. 2 × 1 = 2, 2 × 2 = 4, 2 × 3 = 6, 2 × 4 = 8, 2 × 5 = 10.', ex: () => table(2) },
@@ -679,7 +679,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'bang-nhan-3-4', group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Bảng nhân 3 và 4',
+      id: 'bang-nhan-3-4', sym: '×3 ×4', group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Bảng nhân 3 và 4',
       pair: (d) => [d === 0 ? 3 : d === 1 ? 4 : pick([3, 4]), rand(1, 10)],
       theory: [
         { t: 'Bảng nhân 3: đếm thêm 3. Ba, sáu, chín, mười hai, mười lăm, mười tám, hai mươi mốt, hai mươi tư, hai mươi bảy, ba mươi.', ex: () => table(3) },
@@ -689,7 +689,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'bang-nhan-6-9', group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Bảng nhân 6, 7, 8, 9',
+      id: 'bang-nhan-6-9', sym: '×6–9', group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Bảng nhân 6, 7, 8, 9',
       pair: (d) => [[pick([6, 7]), pick([6, 7]), pick([8, 9]), pick([8, 9]), rand(6, 9)][d], rand(1, 10)],
       theory: [
         { t: 'Bảng nhân 6: sáu, mười hai, mười tám, hai mươi tư, ba mươi, ba mươi sáu, bốn mươi hai, bốn mươi tám, năm mươi tư, sáu mươi.', ex: () => table(6) },
@@ -701,7 +701,7 @@ KE.subjects = KE.subjects || [];
       ],
     },
     {
-      id: 'nhan-nhieu-chu-so', bigMul: true, bossPair: (t) => [genMul(2, true), genMul(3, false), genMul(3, true)][t - 1], group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Nhân số có 2, 3 chữ số với số có 1 chữ số',
+      id: 'nhan-nhieu-chu-so', sym: '×123', bigMul: true, bossPair: (t) => [genMul(2, true), genMul(3, false), genMul(3, true)][t - 1], group: 'mul', op: 'mul', grade: 'Lớp 3', title: 'Nhân số có 2, 3 chữ số với số có 1 chữ số',
       pair: (d) => [genMul(2, false), genMul(2, true), genMul(3, false), genMul(3, true), genMul(3, true)][d],
       typeMap: { missing: 'calc' },
       theory: [

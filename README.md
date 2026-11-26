@@ -17,7 +17,7 @@ Mỗi bài gồm:
 3. **3 màn Đấu Boss** – bài toán tư duy khó hơn dùng kiến thức của bài: dãy tính nhiều bước, tìm quy luật dãy số, bài toán nhiều hơn/ít hơn hai bước, cân bằng hai vế, đố vui hình, bài toán tuổi, đếm chân gà chó, nhân trước cộng sau... Mỗi câu đúng ở màn Boss được +20 XP.
 4. **Đáp án và giải thích** hiện ngay dưới mỗi câu (cách đếm, tách số tròn chục, đặt tính cột có nhớ...).
 
-Nút **‹ Quay lại** cố định dưới màn hình đưa bé về menu ngay trước đó.
+Thanh cố định dưới màn hình có nút **‹ Quay lại** (về menu ngay trước), Khỉ Mập ở giữa và nút **Tiếp theo ›** (câu tiếp, màn tiếp hoặc bài học tiếp).
 
 Đúng ≥ 3/5 câu là qua màn, đúng 5/5 được 3 sao. Mỗi câu đúng +10 XP để bé lên cấp. Tiến độ lưu trong trình duyệt của máy (localStorage).
 
@@ -37,9 +37,9 @@ Dữ liệu từ vựng nằm trong `js/subjects/english-data.js`, mỗi dòng m
 
 6 chủ đề (Gia đình, Con vật, Đồ ăn, Thời tiết và màu sắc, Ở trường, Hoạt động hằng ngày). Mỗi câu: nghe một câu nói, nghe câu hỏi rồi chọn đáp án có hình. Vì bé chưa biết đọc nên **câu nói, câu hỏi, từng đáp án và câu hướng dẫn đều có nút 🔊**. Màn Boss là các đoạn dài 2 – 3 câu, chỉ nghe không hiện chữ.
 
-## Linh vật khỉ Bon
+## Linh vật Khỉ Mập
 
-Chú khỉ Bon do Bé Vui Học tự vẽ bằng SVG (`js/core/mascot.js`). Bé lên cấp thì Bon được tặng đồ: khăn quàng (cấp 2), áo gile (3), ủng (4), áo choàng (5), huy hiệu (6), vương miện (7), gậy phép (8), hào quang (9), tàu vũ trụ (10), vũ trụ lấp lánh (12).
+Chú Khỉ Mập do Bé Vui Học tự vẽ bằng SVG (`js/core/mascot.js`). Bé lên cấp thì Khỉ Mập được tặng đồ: khăn quàng (cấp 2), áo gile (3), ủng (4), áo choàng (5), huy hiệu (6), vương miện (7), gậy phép (8), hào quang (9), tàu vũ trụ (10), vũ trụ lấp lánh (12).
 
 Tất cả các màn đều mở sẵn, bé giỏi có thể thử màn khó và Boss ngay từ đầu.
 

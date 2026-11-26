@@ -52,9 +52,9 @@ window.KE = window.KE || {};
     $app.innerHTML = `
       <section class="hero">
         <div class="hero-mascot">${KE.mascot.svg(lv.lv, 170)}</div>
-        <div class="mascot-name">Khỉ ${KE.mascot.NAME} · bạn đồng hành của bé</div>
+        <div class="mascot-name">${KE.mascot.NAME} · bạn đồng hành của bé</div>
         <h1>Chào bé! Hôm nay mình học gì nào?</h1>
-        <p>Chơi qua từng màn để nhận <b>sao vàng</b>, <b>lên cấp</b> và tặng quà cho khỉ ${KE.mascot.NAME}!</p>
+        <p>Chơi qua từng màn để nhận <b>sao vàng</b>, <b>lên cấp</b> và tặng quà cho ${KE.mascot.NAME}!</p>
         <div class="hero-stats">
           <div><b>Cấp ${lv.lv}</b><span>Cấp độ</span></div>
           <div><b>${S.get().xp}</b><span>Điểm XP</span></div>
@@ -89,11 +89,12 @@ window.KE = window.KE || {};
         <div class="grid lessons">
           ${sub.lessons.filter((l) => l.group === g.id).map((L) => {
             const got = lessonStars(sid, L), max = L.levels.length * 3;
-            return `<a class="card lesson" href="#/s/${sid}/l/${L.id}">
-              <span class="grade">${esc(L.grade)}</span>
-              <div class="lesson-title">${L.icon ? `<span class="lesson-icon pic">${L.icon}</span> ` : ''}${esc(L.title)}</div>
-              <div class="progress"><span style="width:${Math.round((got / max) * 100)}%"></span></div>
-              <div class="lesson-stars">⭐ ${got} / ${max}</div>
+            return `<a class="card lesson tile" href="#/s/${sid}/l/${L.id}">
+              <span class="tile-icon ${L.icon ? 'pic' : 'sym'}">${L.icon || L.sym || g.icon}</span>
+              <span class="tile-title">${esc(L.title)}</span>
+              <span class="tile-grade">${esc(L.grade)}</span>
+              <span class="progress"><span style="width:${Math.round((got / max) * 100)}%"></span></span>
+              <span class="tile-stars">⭐ ${got}/${max}</span>
             </a>`;
           }).join('')}
         </div>`).join('')}`;
@@ -182,6 +183,7 @@ window.KE = window.KE || {};
           </div>
           <div id="feedback"></div>
         </section>`;
+      setNext({ label: st.i === qs.length - 1 ? 'Kết quả ›' : 'Câu tiếp ›', disabled: true });
       if (q.say) document.getElementById('btn-say').onclick = () => KE.speech.speak(q.say, { lang: sub.lang, rate: 0.85 });
       if (q.autoSay) setTimeout(() => KE.speech.speakList([].concat(q.autoSay), { lang: sub.lang, rate: 0.85 }), 250);
       else if (S.get().settings.autoRead && q.say) KE.speech.speak(q.say, { lang: sub.lang });
@@ -220,7 +222,9 @@ window.KE = window.KE || {};
       const nx = document.getElementById('btn-next');
       nx.focus({ preventScroll: true });
       document.getElementById('feedback').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      nx.onclick = () => { KE.speech.stop(); st.i++; st.i < qs.length ? renderQ() : finish(); };
+      const goNext = () => { KE.speech.stop(); st.i++; st.i < qs.length ? renderQ() : finish(); };
+      nx.onclick = goNext;
+      setNext({ label: last ? 'Kết quả ›' : 'Câu tiếp ›', onClick: goNext });
     }
 
     function finish() {
@@ -250,6 +254,7 @@ window.KE = window.KE || {};
           </div>
         </section>`;
       document.getElementById('btn-again').onclick = () => viewPlay(sid, lid, lvIdx);
+      setNext(hasNext ? { label: 'Màn tiếp ›', href: `#/s/${sid}/l/${lid}/p/${lvIdx + 1}` } : { label: 'Bài khác ›', href: `#/s/${sid}` });
       if (stars >= 2) confetti();
       KE.speech.speak(stars ? `Bé trả lời đúng ${c} trên ${n} câu. Giỏi lắm!` : `Bé trả lời đúng ${c} trên ${n} câu. Mình thử lại nhé!`, { lang: 'vi-VN' });
     }
@@ -273,19 +278,50 @@ window.KE = window.KE || {};
 
   /* ---------- Điều hướng ---------- */
   function go(h) { location.hash = h; }
+  /* ---------- Thanh điều hướng cố định: Quay lại · Khỉ Mập · Tiếp theo ---------- */
+  function setNext(o) {
+    const nx = document.querySelector('#backbar .next-btn');
+    if (!o) { nx.hidden = true; return; }
+    nx.hidden = false;
+    nx.textContent = o.label || 'Tiếp theo ›';
+    nx.classList.toggle('disabled', !!o.disabled);
+    if (o.href) { nx.setAttribute('href', o.href); nx.onclick = null; }
+    else {
+      nx.removeAttribute('href');
+      nx.onclick = (e) => { e.preventDefault(); if (!o.disabled && o.onClick) o.onClick(); };
+    }
+  }
+  function nextLessonHref(sid) {
+    const sub = subject(sid);
+    if (!sub) return null;
+    const L = sub.lessons.find((x) => lessonStars(sid, x) < x.levels.length * 3) || sub.lessons[0];
+    return L ? `#/s/${sid}/l/${L.id}` : null;
+  }
+  function nextLevelHref(sid, lid) {
+    const L = lessonOf(subject(sid), lid);
+    if (!L) return null;
+    let i = L.levels.findIndex((_, k) => S.stars(sid, lid, k) === 0);
+    if (i < 0) i = 0;
+    return `#/s/${sid}/l/${lid}/p/${i}`;
+  }
+
   function route() {
     KE.speech.stop();
+    setNext(null);
     const parts = (location.hash.replace(/^#\/?/, '') || '').split('/').filter(Boolean);
     renderHeader();
     let parent = null;
     if (parts[0] === 's' && parts[2] === 'l' && parts[4] === 'p') { parent = `#/s/${parts[1]}/l/${parts[3]}`; viewPlay(parts[1], parts[3], parts[5]); }
-    else if (parts[0] === 's' && parts[2] === 'l') { parent = `#/s/${parts[1]}`; viewLesson(parts[1], parts[3]); }
-    else if (parts[0] === 's') { parent = '#/'; viewSubject(parts[1]); }
+    else if (parts[0] === 's' && parts[2] === 'l') { parent = `#/s/${parts[1]}`; viewLesson(parts[1], parts[3]); setNext({ label: 'Chơi ›', href: nextLevelHref(parts[1], parts[3]) }); }
+    else if (parts[0] === 's') { parent = '#/'; viewSubject(parts[1]); setNext({ label: 'Học tiếp ›', href: nextLessonHref(parts[1]) }); }
     else viewHome();
     /* Nút quay lại cố định: về menu ngay phía trước */
     const back = document.getElementById('backbar');
     back.hidden = !parent;
-    if (parent) back.querySelector('a').setAttribute('href', parent);
+    if (parent) {
+      back.querySelector('.back-btn').setAttribute('href', parent);
+      back.querySelector('.nav-mascot').innerHTML = KE.mascot.svg(S.level().lv, 64);
+    }
     window.scrollTo(0, 0);
   }
   document.addEventListener('click', (e) => {
