@@ -217,7 +217,7 @@ KE.subjects = KE.subjects || [];
           <div class="story-q">${sayBtn(it.q, '🔊')}<b>${esc(it.q)}</b></div>
         </div>
         <div class="q-ask">Nghe rồi chọn câu trả lời đúng:</div>`,
-      say: it.s + ' ... ' + it.q,
+      say: [it.s, it.q],
       autoSay: [it.s, it.q],
       choiceItems: items,
       choices: items.map((x) => x.v),

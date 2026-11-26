@@ -43,6 +43,10 @@ Chú Khỉ Mập do Bé Vui Học tự vẽ bằng SVG (`js/core/mascot.js`). B�
 
 Tất cả các màn đều mở sẵn, bé giỏi có thể thử màn khó và Boss ngay từ đầu.
 
+## Giọng đọc tiếng Anh (Mỹ)
+
+Toàn bộ từ, câu ví dụ, câu nói, câu hỏi và đáp án tiếng Anh được thu sẵn thành file MP3 trong `audio/en/` bằng mô hình giọng nói mã nguồn mở [Kokoro-82M](https://github.com/hexgrad/kokoro) (giấy phép Apache 2.0, giọng Mỹ `af_heart`), chạy offline lúc tạo file. Nhờ vậy mọi máy đều nghe cùng một giọng Mỹ rõ ràng. Tên file là mã FNV-1a của câu; danh sách nằm ở `js/subjects/english-audio.js`. Câu nào chưa có file thì ứng dụng dùng giọng tiếng Anh Mỹ tốt nhất của trình duyệt.
+
 ## Giọng đọc tiếng Việt
 
 Ứng dụng dùng Web Speech API của trình duyệt:
