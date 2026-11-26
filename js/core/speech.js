@@ -40,13 +40,15 @@ KE.speech = (function () {
     const voice = voiceFor(lang);
     if (!voice && !warned && voices.length) {
       warned = true;
-      KE.ui && KE.ui.toast('Máy chưa có giọng đọc tiếng Việt, giọng đọc có thể chưa chuẩn. Nên dùng Edge hoặc điện thoại.');
+      KE.ui && KE.ui.toast(lang.startsWith('vi')
+        ? 'Máy chưa có giọng đọc tiếng Việt, giọng đọc có thể chưa chuẩn. Nên dùng Edge hoặc điện thoại.'
+        : 'Máy chưa có giọng đọc tiếng Anh, giọng đọc có thể chưa chuẩn.');
     }
     let i = 0;
     const next = () => {
       if (my !== token) return;
       if (i >= texts.length) { opts.onEnd && opts.onEnd(); return; }
-      const u = new SpeechSynthesisUtterance(KE.util.toSpeech(texts[i]));
+      const u = new SpeechSynthesisUtterance(lang.startsWith('vi') ? KE.util.toSpeech(texts[i]) : texts[i]);
       u.lang = lang;
       if (voice) u.voice = voice;
       u.rate = opts.rate || 0.9;

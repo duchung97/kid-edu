@@ -1,6 +1,6 @@
 # 🦉 Bé Vui Học
 
-Ứng dụng web giúp bé học **Toán lớp 1 – 3** theo dạng game lên level. Giao diện đen – vàng, chạy hoàn toàn trên trình duyệt (không cần cài đặt, không gửi dữ liệu đi đâu).
+Ứng dụng web giúp bé học **Toán lớp 1 – 3** và **từ vựng Tiếng Anh** theo dạng game lên level. Giao diện đen – vàng, chạy hoàn toàn trên trình duyệt (không cần cài đặt, không gửi dữ liệu đi đâu).
 
 ## Nội dung hiện có
 
@@ -20,6 +20,18 @@ Mỗi bài gồm:
 Nút **‹ Quay lại** cố định dưới màn hình đưa bé về menu ngay trước đó.
 
 Đúng ≥ 3/5 câu để mở khoá màn tiếp theo, đúng 5/5 được 3 sao. Mỗi câu đúng +10 XP để bé lên cấp. Tiến độ lưu trong trình duyệt của máy (localStorage).
+
+## Tiếng Anh: từ vựng theo 15 chủ đề
+
+Gia đình · Động vật · Thực vật · Trái cây · Đồ ăn và đồ uống · Trái đất và thiên nhiên · Thời tiết · Du lịch và phương tiện · Đồ vật trong nhà · Đồ dùng học tập · Cơ thể · Quần áo · Nghề nghiệp · Thể thao · Màu sắc (191 từ).
+
+Không có phần lý thuyết, bé vào chơi luôn. Mỗi câu hỏi hiện **chữ, phiên âm IPA, câu ví dụ** (bấm 🔊 để nghe giọng Anh), bé chọn **hình** đúng. Sau mỗi câu có nghĩa tiếng Việt và bản dịch câu ví dụ.
+
+Màn chơi: Học từ mới (2 phần) → Nghe và chọn hình → Điền vào câu → Thử thách Vàng → Boss 1 (nhìn hình chọn từ) → Boss 2 (chính tả) → Boss 3 (nghĩa tiếng Việt, nghe chọn từ, chính tả).
+
+Dữ liệu từ vựng nằm trong `js/subjects/english-data.js`, mỗi dòng một từ, rất dễ thêm chủ đề mới.
+
+**Hình ảnh**: dùng bộ emoji màu [Noto Color Emoji](https://github.com/googlefonts/noto-emoji) của Google (giấy phép SIL Open Font License), tải qua Google Fonts.
 
 ## Giọng đọc tiếng Việt
 

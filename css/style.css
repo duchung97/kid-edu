@@ -228,3 +228,44 @@ a.card[href]:hover { transform: translateY(-3px); border-color: var(--gold); box
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 body:has(#backbar:not([hidden])) main { padding-bottom: 110px; }
 #feedback { scroll-margin-bottom: 110px; }
+
+/* ---------- Tiếng Anh ---------- */
+.pic { font-family: 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; font-weight: 400; }
+.lesson-icon { font-size: 26px; vertical-align: -3px; }
+.word-card { background: #101010; border: 1px solid var(--gold-dark); border-radius: 16px; padding: 16px; text-align: center; }
+.wc-word { font-size: 40px; font-weight: 800; color: var(--gold2); line-height: 1.2; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.wc-word.vi { font-size: 30px; }
+.ipa { color: var(--muted); font-size: 20px; font-family: 'Segoe UI', 'Noto Sans', 'Lucida Sans Unicode', 'DejaVu Sans', sans-serif; }
+.wc-ex { margin-top: 10px; font-size: 20px; }
+.wc-ex.big { font-size: 26px; font-weight: 700; }
+.wc-ex mark, .vexp-ex mark { background: none; color: var(--gold2); font-weight: 800; text-decoration: underline; }
+.gap { color: var(--gold); letter-spacing: 2px; }
+.vi-hint { color: var(--muted); font-size: 16px; margin-top: 6px; }
+.q-ask { margin-top: 14px; font-size: 20px; font-weight: 700; text-align: center; }
+.say-btn { background: var(--card); border: 1px solid var(--gold-dark); color: var(--text); border-radius: 999px; font-size: 20px; width: 42px; height: 42px; cursor: pointer; vertical-align: middle; flex-shrink: 0; }
+.say-btn.small { width: 34px; height: 34px; font-size: 15px; }
+.say-btn.big { width: 96px; height: 96px; font-size: 44px; border: 3px solid var(--gold); background: #241e0c; animation: pulse 1.8s infinite; }
+.say-btn:hover { border-color: var(--gold); }
+.listen-box { text-align: center; color: var(--muted); font-size: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.big-pic { text-align: center; display: flex; align-items: center; justify-content: center; gap: 14px; }
+.big-pic .pic { font-size: 96px; line-height: 1.1; }
+.choices.pics .choice { background: #f6f1e1; border-color: var(--gold-dark); padding: 10px; }
+.choices.pics .choice .pic { font-size: 64px; line-height: 1.15; display: block; }
+.choices.pics .choice:hover:not(:disabled) { border-color: var(--gold); background: #fff8dc; }
+.choices.pics .choice.right { background: #d9f7e3; border-color: var(--ok); border-width: 4px; }
+.choices.pics .choice.wrong { background: #fde2e2; border-color: var(--bad); border-width: 4px; }
+.choices.words .choice { font-size: 24px; text-transform: none; }
+.fb-answer .pic { font-size: 34px; vertical-align: middle; }
+.vexp-head { display: flex; align-items: center; gap: 12px; }
+.vexp-head .pic { font-size: 48px; }
+.vexp-head > div { flex: 1; }
+.en-word { font-size: 24px; }
+.vexp-ex { margin-top: 10px; }
+.spell { letter-spacing: 1px; font-size: 20px; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(245, 197, 66, .5); } 50% { box-shadow: 0 0 0 14px rgba(245, 197, 66, 0); } }
+@media (max-width: 600px) {
+  .wc-word { font-size: 32px; }
+  .choices.pics .choice .pic { font-size: 52px; }
+  .choices.words .choice { font-size: 19px; }
+  .big-pic .pic { font-size: 80px; }
+}

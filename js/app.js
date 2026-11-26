@@ -86,7 +86,7 @@ window.KE = window.KE || {};
             const got = lessonStars(sid, L), max = L.levels.length * 3;
             return `<a class="card lesson" href="#/s/${sid}/l/${L.id}">
               <span class="grade">${esc(L.grade)}</span>
-              <div class="lesson-title">${esc(L.title)}</div>
+              <div class="lesson-title">${L.icon ? `<span class="lesson-icon pic">${L.icon}</span> ` : ''}${esc(L.title)}</div>
               <div class="progress"><span style="width:${Math.round((got / max) * 100)}%"></span></div>
               <div class="lesson-stars">⭐ ${got} / ${max}</div>
             </a>`;
@@ -110,7 +110,7 @@ window.KE = window.KE || {};
       <nav class="crumbs"><a href="#/">Trang chủ</a> › <a href="#/s/${sid}">${esc(sub.name)}</a> › ${esc(L.title)}</nav>
       <h1 class="page-title">${esc(L.title)} <span class="grade">${esc(L.grade)}</span></h1>
 
-      <section class="panel theory">
+      ${sub.noTheory ? '' : `<section class="panel theory">
         <div class="panel-head">
           <h2>📖 Lý thuyết</h2>
           <button class="btn gold" id="btn-read">🔊 Nghe cả bài</button>
@@ -120,14 +120,15 @@ window.KE = window.KE || {};
             <button class="icon-btn small say" data-i="${i}" aria-label="Nghe đoạn này">🔊</button>
             <div class="tp-body"><p>${esc(p.t)}</p>${p.ex ? `<div class="example">${p.ex()}</div>` : ''}</div>
           </div>`).join('')}
-      </section>
+      </section>`}
 
       <section class="panel">
         <div class="panel-head"><h2>🎮 Chơi qua màn</h2></div>
-        <p class="hint">Trả lời đúng ít nhất 3/5 câu để mở khoá màn tiếp theo. Đúng hết 5 câu được 3 sao! Vượt qua 5 màn sẽ gặp 3 Boss với các bài toán tư duy.</p>
+        <p class="hint">${sub.levelHint || 'Trả lời đúng ít nhất 3/5 câu để mở khoá màn tiếp theo. Đúng hết 5 câu được 3 sao! Vượt qua 5 màn sẽ gặp 3 Boss với các bài toán tư duy.'}</p>
         <div class="level-map">${levels}</div>
       </section>`;
 
+    if (sub.noTheory) return;
     const paras = [...$app.querySelectorAll('.tp')];
     const mark = (i) => paras.forEach((p, k) => p.classList.toggle('reading', k === i));
     const btn = document.getElementById('btn-read');
@@ -167,16 +168,17 @@ window.KE = window.KE || {};
         </div>
         <section class="panel question">
           <div class="q-top"><span class="q-num">Câu ${st.i + 1}/${qs.length}</span>
-            <button class="icon-btn small" id="btn-say" aria-label="Đọc câu hỏi">🔊</button></div>
+            ${q.say ? '<button class="icon-btn small" id="btn-say" aria-label="Đọc câu hỏi">🔊</button>' : ''}</div>
           <div class="q-prompt ${q.small ? 'text' : ''}">${q.prompt}</div>
           ${q.visual || ''}
-          <div class="choices ${q.choices.length === 3 ? 'three' : ''}">
-            ${q.choices.map((c) => `<button class="choice" data-v="${esc(c)}">${esc(c)}</button>`).join('')}
+          <div class="choices ${q.choices.length === 3 ? 'three' : ''} ${q.pics ? 'pics' : ''} ${q.words ? 'words' : ''}">
+            ${q.choices.map((c) => `<button class="choice" data-v="${esc(c)}">${q.pics ? `<span class="pic">${esc(c)}</span>` : esc(c)}</button>`).join('')}
           </div>
           <div id="feedback"></div>
         </section>`;
-      document.getElementById('btn-say').onclick = () => KE.speech.speak(q.say, { lang: sub.lang });
-      if (S.get().settings.autoRead) KE.speech.speak(q.say, { lang: sub.lang });
+      if (q.say) document.getElementById('btn-say').onclick = () => KE.speech.speak(q.say, { lang: sub.lang, rate: 0.85 });
+      if (q.autoSay) setTimeout(() => KE.speech.speak(q.autoSay, { lang: sub.lang, rate: 0.85 }), 250);
+      else if (S.get().settings.autoRead && q.say) KE.speech.speak(q.say, { lang: sub.lang });
       $app.querySelectorAll('.choice').forEach((b) => { b.onclick = () => answer(b, q); });
     }
 
@@ -192,13 +194,14 @@ window.KE = window.KE || {};
         else if (b === btn) b.classList.add('wrong');
       });
       ok ? KE.sound.correct() : KE.sound.wrong();
+      if (q.afterSay) setTimeout(() => KE.speech.speak(q.afterSay, { lang: sub.lang, rate: 0.85 }), 450);
       const praise = KE.util.pick(['Giỏi quá!', 'Chính xác!', 'Tuyệt vời!', 'Bé làm đúng rồi!']);
       const last = st.i === qs.length - 1;
       document.getElementById('feedback').innerHTML = `
         <div class="feedback ${ok ? 'ok' : 'bad'}">
           <div class="fb-title">${ok ? '🎉 ' + praise : '💪 Chưa đúng rồi, cố lên nhé!'}</div>
-          <div class="fb-answer">Đáp án đúng: <b>${esc(q.answer)}</b></div>
-          <details class="fb-explain" ${ok ? '' : 'open'}>
+          <div class="fb-answer">Đáp án đúng: <b class="${q.pics ? 'pic' : ''}">${esc(q.answer)}</b></div>
+          <details class="fb-explain" ${ok && !sub.noTheory ? '' : 'open'}>
             <summary>💡 Xem giải thích</summary>
             <div>${q.explain}</div>
           </details>
@@ -273,7 +276,11 @@ window.KE = window.KE || {};
     if (parent) back.querySelector('a').setAttribute('href', parent);
     window.scrollTo(0, 0);
   }
-  document.addEventListener('click', (e) => { if (e.target.closest('.btn, .card, .level-node')) KE.sound.click(); });
+  document.addEventListener('click', (e) => {
+    const sb = e.target.closest('[data-say]');
+    if (sb) { KE.speech.speak(sb.dataset.say, { lang: sb.dataset.lang || 'vi-VN', rate: sb.classList.contains('small') ? 0.8 : 0.85 }); return; }
+    if (e.target.closest('.btn, .card, .level-node')) KE.sound.click();
+  });
   window.addEventListener('hashchange', route);
   route();
 })();
