@@ -106,7 +106,7 @@ window.KE = window.KE || {};
     if (!L) return go('#/s/' + sid);
     const levels = L.levels.map((lv, i) => {
       const open = unlocked(sid, lid, i), st = S.stars(sid, lid, i);
-      return `${lv.boss && i > 0 && !L.levels[i - 1].boss ? '<div class="boss-divider">⚔️ Khu vực Boss: bài toán tư duy</div>' : ''}<a class="level-node ${lv.boss ? 'boss' : ''} ${open ? '' : 'locked'} ${st ? 'done' : ''}" ${open ? `href="#/s/${sid}/l/${lid}/p/${i}"` : ''}>
+      return `${lv.boss && i > 0 && !L.levels[i - 1].boss ? `<div class="boss-divider">⚔️ Khu vực Boss: ${L.group === 'games' ? 'thử thách khó nhất' : sid === 'toan' ? 'bài toán tư duy' : 'thử thách khó'}</div>` : ''}<a class="level-node ${lv.boss ? 'boss' : ''} ${open ? '' : 'locked'} ${st ? 'done' : ''}" ${open ? `href="#/s/${sid}/l/${lid}/p/${i}"` : ''}>
         <span class="node-num">${open ? lv.icon : '🔒'}</span>
         <span class="node-info"><b>${lv.boss ? '' : `Màn ${i + 1}: `}${esc(lv.title)}</b><span class="node-stars">${starStr(st)}</span></span>
       </a>`;
@@ -160,6 +160,7 @@ window.KE = window.KE || {};
     lvIdx = +lvIdx;
     if (!L || !L.levels[lvIdx] || !unlocked(sid, lid, lvIdx)) return go(`#/s/${sid}/l/${lid}`);
     const level = L.levels[lvIdx];
+    if (level.game) return playGame(sid, lid, lvIdx, sub, L, level);
     const qs = level.build();
     const st = { i: 0, correct: 0, results: [] };
 
@@ -227,39 +228,71 @@ window.KE = window.KE || {};
       setNext({ label: last ? 'Kết quả ›' : 'Câu tiếp ›', onClick: goNext });
     }
 
-    function finish() {
-      const c = st.correct, n = qs.length;
-      const stars = c === n ? 3 : c >= n - 1 ? 2 : c >= 3 ? 1 : 0;
-      const before = S.stars(sid, lid, lvIdx);
-      const lvBefore = S.level().lv;
-      const xp = c * (level.boss ? 20 : 10) + (stars === 3 && before < 3 ? 20 : 0);
-      S.addXp(xp);
-      if (stars) S.setStars(sid, lid, lvIdx, stars);
-      const lvAfter = S.level().lv;
-      renderHeader();
-      const hasNext = lvIdx + 1 < L.levels.length;
-      if (stars) KE.sound.win();
-      $app.innerHTML = `
-        <section class="panel result">
-          <div class="big-stars">${[0, 1, 2].map((k) => `<span class="${k < stars ? 'on' : ''}" style="animation-delay:${k * 0.25}s">★</span>`).join('')}</div>
-          <h1>${stars === 3 ? 'Xuất sắc!' : stars === 2 ? 'Rất tốt!' : stars === 1 ? 'Qua màn rồi!' : 'Chưa qua màn, thử lại nhé!'}</h1>
-          <p>Bé trả lời đúng <b>${c}/${n}</b> câu và nhận <b>+${xp} XP</b>.</p>
-          ${lvAfter > lvBefore ? `<div class="levelup">🎊 Lên cấp ${lvAfter}! 🎊</div>
-            <div class="result-mascot">${KE.mascot.svg(lvAfter, 150)}</div>
-            ${(() => { const got = KE.mascot.ITEMS.filter((it) => it.lv > lvBefore && it.lv <= lvAfter); return got.length ? `<p class="gift">${KE.mascot.NAME} nhận được quà mới: ${got.map((it) => `<b>${it.icon} ${it.name}</b>`).join(', ')}!</p>` : ''; })()}` : ''}
-          <div class="result-btns">
-            <a class="btn" href="#/s/${sid}/l/${lid}">📖 Về bài học</a>
-            <button class="btn" id="btn-again">🔁 Chơi lại</button>
-            ${hasNext ? `<a class="btn gold" href="#/s/${sid}/l/${lid}/p/${lvIdx + 1}">Màn tiếp theo ➜</a>` : ''}
-          </div>
-        </section>`;
-      document.getElementById('btn-again').onclick = () => viewPlay(sid, lid, lvIdx);
-      setNext(hasNext ? { label: 'Màn tiếp ›', href: `#/s/${sid}/l/${lid}/p/${lvIdx + 1}` } : { label: 'Bài khác ›', href: `#/s/${sid}` });
-      if (stars >= 2) confetti();
-      KE.speech.speak(stars ? `Bé trả lời đúng ${c} trên ${n} câu. Giỏi lắm!` : `Bé trả lời đúng ${c} trên ${n} câu. Mình thử lại nhé!`, { lang: 'vi-VN' });
-    }
+    function finish() { showResult(sid, lid, lvIdx, st.correct, qs.length); }
 
     renderQ();
+  }
+
+/* ---------- Màn kết quả (dùng chung cho trắc nghiệm và trò chơi) ---------- */
+function showResult(sid, lid, lvIdx, c, n) {
+  const L = lessonOf(subject(sid), lid), level = L.levels[lvIdx];
+  c = Math.max(0, Math.min(c, n));
+  const r = c / n;
+  const stars = r >= 1 ? 3 : r >= 0.8 ? 2 : r >= 0.6 ? 1 : 0;
+    const before = S.stars(sid, lid, lvIdx);
+    const lvBefore = S.level().lv;
+    const xp = Math.round(r * 5) * (level.boss ? 20 : 10) + (stars === 3 && before < 3 ? 20 : 0);
+    S.addXp(xp);
+    if (stars) S.setStars(sid, lid, lvIdx, stars);
+    const lvAfter = S.level().lv;
+    renderHeader();
+    const hasNext = lvIdx + 1 < L.levels.length;
+    if (stars) KE.sound.win();
+    $app.innerHTML = `
+      <section class="panel result">
+        <div class="big-stars">${[0, 1, 2].map((k) => `<span class="${k < stars ? 'on' : ''}" style="animation-delay:${k * 0.25}s">★</span>`).join('')}</div>
+        <h1>${stars === 3 ? 'Xuất sắc!' : stars === 2 ? 'Rất tốt!' : stars === 1 ? 'Qua màn rồi!' : 'Chưa qua màn, thử lại nhé!'}</h1>
+        <p>Bé ${level.game ? 'đạt' : 'trả lời đúng'} <b>${c}/${n}</b> ${level.game ? 'điểm' : 'câu'} và nhận <b>+${xp} XP</b>.</p>
+        ${lvAfter > lvBefore ? `<div class="levelup">🎊 Lên cấp ${lvAfter}! 🎊</div>
+          <div class="result-mascot">${KE.mascot.svg(lvAfter, 150)}</div>
+          ${(() => { const got = KE.mascot.ITEMS.filter((it) => it.lv > lvBefore && it.lv <= lvAfter); return got.length ? `<p class="gift">${KE.mascot.NAME} nhận được quà mới: ${got.map((it) => `<b>${it.icon} ${it.name}</b>`).join(', ')}!</p>` : ''; })()}` : ''}
+        <div class="result-btns">
+          <a class="btn" href="#/s/${sid}/l/${lid}">📖 Về bài học</a>
+          <button class="btn" id="btn-again">🔁 Chơi lại</button>
+          ${hasNext ? `<a class="btn gold" href="#/s/${sid}/l/${lid}/p/${lvIdx + 1}">Màn tiếp theo ➜</a>` : ''}
+        </div>
+      </section>`;
+    document.getElementById('btn-again').onclick = () => viewPlay(sid, lid, lvIdx);
+    setNext(hasNext ? { label: 'Màn tiếp ›', href: `#/s/${sid}/l/${lid}/p/${lvIdx + 1}` } : { label: 'Bài khác ›', href: `#/s/${sid}` });
+    if (stars >= 2) confetti();
+    KE.speech.speak(stars ? `Bé đạt ${c} trên ${n}. Giỏi lắm!` : `Bé đạt ${c} trên ${n}. Mình thử lại nhé!`, { lang: 'vi-VN' });
+  }
+
+  /* ---------- Trò chơi tương tác (Tiếng Anh phần 3) ---------- */
+  function playGame(sid, lid, lvIdx, sub, L, level) {
+    $app.innerHTML = `
+      <nav class="crumbs"><a href="#/s/${sid}/l/${lid}">‹ ${esc(L.title)}</a></nav>
+      <div class="play-head">
+        <div class="play-title ${level.boss ? 'boss' : ''}">${level.icon} ${esc(level.title)}</div>
+        <div class="game-score" id="game-score"></div>
+      </div>
+      <p class="game-howto">${esc(L.howto || '')} <button class="say-btn small" data-say="${esc(L.howto || '')}" data-lang="vi-VN" aria-label="Nghe hướng dẫn">🔊</button></p>
+      <section class="panel game-area" id="game"></section>`;
+    setNext({ label: 'Tiếp ›', disabled: true });
+    let over = false;
+    const api = {
+      el: document.getElementById('game'),
+      lang: sub.lang,
+      say: (t, o) => KE.speech.speak(t, Object.assign({ lang: sub.lang, rate: 0.85 }, o || {})),
+      sayVi: (t) => KE.speech.speak(t, { lang: 'vi-VN' }),
+      good: () => KE.sound.correct(),
+      bad: () => KE.sound.wrong(),
+      score: (txt) => { const e = document.getElementById('game-score'); if (e) e.textContent = txt; },
+      alive: () => !over && document.body.contains(api.el),
+      done: (c, n) => { if (over) return; over = true; setTimeout(() => { if (document.body.contains(api.el)) showResult(sid, lid, lvIdx, c, n); }, 900); },
+    };
+    if (L.howto) setTimeout(() => api.sayVi(L.howto), 150);
+    level.game(api);
   }
 
   function confetti() {

@@ -9,6 +9,7 @@
 | ➕ Cộng | Phạm vi 10 · 20 · 100 · 1000 · 10 000 |
 | ➖ Trừ | Phạm vi 10 · 20 · 100 · 1000 · 10 000 |
 | ✖️ Nhân | Phép nhân là gì? · Bảng nhân 2, 5 · Bảng nhân 3, 4 · Bảng nhân 6 – 9 · Nhân số có 2, 3 chữ số với số có 1 chữ số |
+| 🧮 Bảng cửu chương | Bảng nhân 1 đến 10, mỗi bảng một bài (xem bảng, nghe đọc từng dòng, mẹo nhớ, luyện tập) · Ôn tập tất cả các bảng |
 
 Mỗi bài gồm:
 
@@ -37,6 +38,12 @@ Dữ liệu từ vựng nằm trong `js/subjects/english-data.js`, mỗi dòng m
 
 6 chủ đề (Gia đình, Con vật, Đồ ăn, Thời tiết và màu sắc, Ở trường, Hoạt động hằng ngày). Mỗi câu: nghe một câu nói, nghe câu hỏi rồi chọn đáp án có hình. Vì bé chưa biết đọc nên **câu nói, câu hỏi, từng đáp án và câu hướng dẫn đều có nút 🔊**. Màn Boss là các đoạn dài 2 – 3 câu, chỉ nghe không hiện chữ.
 
+## Tiếng Anh phần 3: 15 trò chơi vui
+
+Lật thẻ trí nhớ · Bắn bóng bay · Đập hình đúng · Đi chợ cùng Khỉ Mập · Xếp chữ cái · Đúng hay sai · Khỉ Mập leo cây · Nối hình với chữ · Tìm hình lạc loài · Phân loại vào giỏ · Ghép câu · Chữ cái A B C · Đếm số tiếng Anh · Hình bí ẩn · Chuỗi trí nhớ.
+
+Mỗi trò có 5 màn và 3 màn Đấu Boss, màn sau khó hơn (nhiều hình hơn, trộn nhiều chủ đề, có đồng hồ). Trò chơi dùng lại từ vựng 15 chủ đề, hình emoji và giọng Mỹ thu sẵn. Mã nằm trong `js/subjects/english-games.js`; mỗi màn là một hàm `game(api)` và gọi `api.done(đúng, tổng)` khi chơi xong.
+
 ## Linh vật Khỉ Mập
 
 Chú Khỉ Mập do Bé Vui Học tự vẽ bằng SVG (`js/core/mascot.js`). Bé lên cấp thì Khỉ Mập được tặng đồ: khăn quàng (cấp 2), áo gile (3), ủng (4), áo choàng (5), huy hiệu (6), vương miện (7), gậy phép (8), hào quang (9), tàu vũ trụ (10), vũ trụ lấp lánh (12).
@@ -59,7 +66,7 @@ Toàn bộ từ, câu ví dụ, câu nói, câu hỏi và đáp án tiếng Anh 
 index.html
 css/style.css
 js/core/        tiện ích chung: utils (giải thích phép tính), speech (đọc to), sound, store (lưu tiến độ)
-js/subjects/    mỗi môn một file: math.js (Toán), english.js (Tiếng Anh – sắp ra mắt)
+js/subjects/    mỗi môn một file: math.js (Toán), english*.js (Tiếng Anh: dữ liệu, bài học, trò chơi, danh sách file âm thanh)
 js/app.js       điều hướng và giao diện
 ```
 

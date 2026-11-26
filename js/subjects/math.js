@@ -713,18 +713,56 @@ KE.subjects = KE.subjects || [];
     },
   ];
 
+
+  /* ===== BẢNG CỬU CHƯƠNG (bảng nhân 1 đến 10) ===== */
+  const TIPS = {
+    1: 'Mẹo: số nào nhân với 1 cũng bằng chính số đó.',
+    2: 'Mẹo: bảng nhân 2 là đếm thêm 2, kết quả luôn là số chẵn.',
+    3: 'Mẹo: bảng nhân 3 là đếm thêm 3: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30.',
+    4: 'Mẹo: nhân với 4 bằng gấp đôi nhân với 2. Ví dụ 2 × 7 = 14, gấp đôi là 4 × 7 = 28.',
+    5: 'Mẹo: kết quả bảng nhân 5 luôn có chữ số tận cùng là 0 hoặc 5.',
+    6: 'Mẹo: 6 nhân với số chẵn thì kết quả tận cùng bằng chính số đó: 6 × 2 = 12, 6 × 4 = 24, 6 × 6 = 36, 6 × 8 = 48.',
+    7: 'Mẹo: nhớ 7 × 8 = 56 theo dãy 5, 6, 7, 8 (56 = 7 × 8).',
+    8: 'Mẹo: nhân với 8 bằng gấp đôi nhân với 4. Ví dụ 4 × 6 = 24, gấp đôi là 8 × 6 = 48.',
+    9: 'Mẹo: trong bảng nhân 9, cộng hai chữ số của kết quả luôn được 9: 18, 27, 36, 45...',
+    10: 'Mẹo: nhân với 10 chỉ cần viết thêm chữ số 0 vào sau: 10 × 7 = 70.',
+  };
+  for (let n = 1; n <= 10; n++) {
+    const theory = [{ t: `Bảng nhân ${n}. Bé đọc to theo nhé!`, ex: () => table(n) }];
+    for (let i = 1; i <= 10; i++) theory.push({ t: `${n} × ${i} = ${n * i}` });
+    theory.push({ t: TIPS[n] });
+    LESSONS.push({
+      id: 'cuu-chuong-' + n, sym: '×' + n, group: 'table', op: 'mul', grade: 'Lớp 2 – 3', title: 'Bảng nhân ' + n,
+      // màn đầu hỏi theo thứ tự nhỏ, càng về sau càng ngẫu nhiên
+      pair: (d) => [n, d === 0 ? rand(1, 5) : d === 1 ? rand(5, 10) : rand(1, 10)],
+      bossPair: () => [n, rand(3, 10)],
+      theory,
+    });
+  }
+  LESSONS.push({
+    id: 'cuu-chuong-on-tap', sym: '×?', group: 'table', op: 'mul', grade: 'Lớp 3', title: 'Ôn tập cả bảng cửu chương',
+    pair: (d) => [d < 2 ? rand(2, 5) : rand(2, 9), rand(1, 10)],
+    bossPair: () => [rand(3, 9), rand(3, 10)],
+    theory: [
+      { t: 'Bảng cửu chương gồm các bảng nhân từ 2 đến 9. Bé hãy học thuộc từng bảng nhé!' },
+      { t: 'Đổi chỗ hai số thì kết quả không đổi: 3 × 8 = 8 × 3 = 24. Vì vậy bé chỉ cần nhớ một nửa bảng!' },
+      { t: 'Nếu quên một phép tính, hãy dùng phép tính gần nó: 7 × 6 = 42, thêm 7 nữa là 7 × 7 = 49.' },
+    ],
+  });
+
   LESSONS.forEach((L) => { L.levels = makeLevels(L); });
 
   KE.subjects.push({
     id: 'toan',
     name: 'Toán',
     icon: '🔢',
-    desc: 'Cộng, trừ, nhân lớp 1 – 3',
+    desc: 'Cộng, trừ, nhân, bảng cửu chương lớp 1 – 3',
     lang: 'vi-VN',
     groups: [
       { id: 'add', name: 'Phép cộng', icon: '➕' },
       { id: 'sub', name: 'Phép trừ', icon: '➖' },
       { id: 'mul', name: 'Phép nhân', icon: '✖️' },
+      { id: 'table', name: 'Bảng cửu chương', icon: '🧮' },
     ],
     lessons: LESSONS,
   });
