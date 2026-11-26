@@ -113,7 +113,7 @@ KE.subjects = KE.subjects || [];
         key: 'p2w' + W.w,
         prompt: `<div class="big-pic"><span class="pic">${W.pic}</span></div><div class="q-ask">Hình này là từ nào?</div>`,
         say: 'What is this?',
-        words: true,
+        words: true, sayChoices: true,
         choices: shuffle([W, ...others(W, words)].map((x) => x.w)),
         answer: W.w,
         afterSay: W.w,
@@ -139,9 +139,9 @@ KE.subjects = KE.subjects || [];
     meaning(W, words) {
       return {
         key: 'mean' + W.w,
-        prompt: `<div class="word-card"><div class="wc-word vi">“${esc(W.vi)}”</div></div><div class="q-ask">Trong tiếng Anh là từ nào?</div>`,
+        prompt: `<div class="word-card"><div class="wc-word vi">“${esc(W.vi)}” ${sayBtn(W.vi, '🔊').replace('en-US', 'vi-VN')}</div></div><div class="q-ask">Trong tiếng Anh là từ nào?</div>`,
         say: '',
-        words: true,
+        words: true, sayChoices: true,
         choices: shuffle([W, ...others(W, words)].map((x) => x.w)),
         answer: W.w,
         afterSay: W.w,
@@ -190,6 +190,67 @@ KE.subjects = KE.subjects || [];
     }));
   }
 
+
+  /* ============================================================
+     PHẦN 2: NGHE HIỂU
+     ============================================================ */
+  function parseListen(text) {
+    return text.trim().split('\n').map((line) => {
+      const [s, sVi, q, qVi, ...ans] = line.split('|').map((x) => x.trim());
+      const answers = ans.map((a) => { const [t, pic, vi] = a.split('~'); return { t, pic, vi }; });
+      return { s, sVi, q, qVi, answers };
+    });
+  }
+
+  function listenQ(it, showText, boss) {
+    const right = it.answers[0];
+    const items = shuffle(it.answers).map((a) => ({
+      v: a.t, say: a.t,
+      html: `<span class="pic">${a.pic}</span><span class="clabel">${esc(a.t)}</span>`,
+    }));
+    return {
+      key: 'lis' + it.s,
+      prompt: `<div class="story ${boss ? 'boss' : ''}">
+          <div class="story-row">${sayBtn(it.s, '🔊', 'big')}
+            <div class="story-text">${showText ? `<div class="story-en">${esc(it.s)}</div>` : '<div class="story-hidden">Bấm loa để nghe câu nói</div>'}</div>
+          </div>
+          <div class="story-q">${sayBtn(it.q, '🔊')}<b>${esc(it.q)}</b></div>
+        </div>
+        <div class="q-ask">Nghe rồi chọn câu trả lời đúng:</div>`,
+      say: it.s + ' ... ' + it.q,
+      autoSay: [it.s, it.q],
+      choiceItems: items,
+      choices: items.map((x) => x.v),
+      answer: right.t,
+      answerHtml: `<span class="pic">${right.pic}</span> ${esc(right.t)}`,
+      afterSay: right.t,
+      explain: `<div class="vexp">
+          <div class="vexp-ex">🗣️ <i>${esc(it.s)}</i> ${sayBtn(it.s, '🔊', 'small')}<br>→ ${esc(it.sVi)}</div>
+          <div class="vexp-ex">❓ <i>${esc(it.q)}</i> ${sayBtn(it.q, '🔊', 'small')}<br>→ ${esc(it.qVi)}</div>
+          <div class="vexp-ex">✅ <b>${esc(right.t)}</b> <span class="pic">${right.pic}</span> = ${esc(right.vi)}</div>
+        </div>`,
+    };
+  }
+
+  function listeningLessons() {
+    return (KE.listeningTopics || []).map((t) => {
+      const items = parseListen(t.items);
+      const boss = parseListen(t.boss);
+      const pickN = (arr, n) => shuffle(arr).slice(0, n);
+      const plan = [
+        { title: 'Nghe và đọc', icon: '🚀', build: () => pickN(items, 5).map((x) => listenQ(x, true)) },
+        { title: 'Nghe và đọc (tiếp)', icon: '⚡', build: () => pickN(items, 5).map((x) => listenQ(x, true)) },
+        { title: 'Chỉ nghe', icon: '🎧', build: () => pickN(items, 5).map((x) => listenQ(x, false)) },
+        { title: 'Chỉ nghe (tiếp)', icon: '👂', build: () => pickN(items, 5).map((x) => listenQ(x, false)) },
+        { title: 'Thử thách Vàng', icon: '🏆', build: () => pickN(items, 5).map((x) => listenQ(x, Math.random() < 0.3)) },
+        { title: 'Đấu Boss 1', icon: '👾', boss: true, build: () => shuffle([...pickN(boss, 2).map((x) => listenQ(x, true, true)), ...pickN(items, 3).map((x) => listenQ(x, false))]) },
+        { title: 'Đấu Boss 2', icon: '🐲', boss: true, build: () => shuffle([...pickN(boss, 3).map((x) => listenQ(x, false, true)), ...pickN(items, 2).map((x) => listenQ(x, false))]) },
+        { title: 'Đấu Boss 3', icon: '👹', boss: true, build: () => shuffle([...pickN(boss, 4).map((x) => listenQ(x, false, true)), ...pickN(items, 1).map((x) => listenQ(x, false))]) },
+      ];
+      return { id: t.id, group: 'listen', grade: t.en, icon: t.icon, title: t.title, levels: plan };
+    });
+  }
+
   const lessons = KE.englishTopics.map((t) => {
     const words = parse(t);
     return {
@@ -202,11 +263,14 @@ KE.subjects = KE.subjects || [];
     id: 'tieng-anh',
     name: 'Tiếng Anh',
     icon: '🔤',
-    desc: 'Từ vựng theo 15 chủ đề',
+    desc: 'Từ vựng 15 chủ đề và nghe hiểu',
     lang: 'en-US',
     noTheory: true,
-    levelHint: 'Không cần học lý thuyết, vào chơi luôn! Mỗi câu có chữ, phiên âm và câu ví dụ, bấm 🔊 để nghe. Đúng ít nhất 3/5 câu để mở màn tiếp theo. Vượt qua 5 màn sẽ gặp 3 Boss: nhìn hình đoán từ, chính tả và nghe hiểu.',
-    groups: [{ id: 'vocab', name: 'Từ vựng theo chủ đề', icon: '📖' }],
-    lessons,
+    levelHint: 'Không cần học lý thuyết, vào chơi luôn! Bấm 🔊 để nghe. Tất cả các màn đều mở sẵn, bé giỏi có thể thử Boss ngay. Đúng 5/5 câu được 3 sao.',
+    groups: [
+      { id: 'vocab', name: 'Phần 1: Từ vựng theo chủ đề', icon: '📖' },
+      { id: 'listen', name: 'Phần 2: Nghe hiểu', icon: '🎧' },
+    ],
+    lessons: lessons.concat(listeningLessons()),
   });
 })();

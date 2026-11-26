@@ -269,3 +269,46 @@ body:has(#backbar:not([hidden])) main { padding-bottom: 110px; }
   .choices.words .choice { font-size: 19px; }
   .big-pic .pic { font-size: 80px; }
 }
+
+/* ---------- Linh vật khỉ Bon ---------- */
+.logo-icon svg { display: block; }
+.hero-mascot { display: flex; justify-content: center; }
+.mascot-name { color: var(--gold); font-weight: 700; margin-top: -4px; }
+.mascot .eyes { animation: blinkEye 4s infinite; transform-origin: 110px 92px; }
+.mascot.floaty { animation: bob 3s ease-in-out infinite; }
+.mascot .twinkle { animation: twinkle 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.mascot .blink { animation: twinkle 1s ease-in-out infinite; }
+.mascot .halo { animation: glow 2s ease-in-out infinite; }
+.mascot .flame { animation: flame .3s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: top; }
+@keyframes blinkEye { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.7); } }
+@keyframes glow { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+@keyframes flame { from { transform: scaleY(.7); } to { transform: scaleY(1.2); } }
+.wardrobe { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.ward { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px; text-align: center; display: flex; flex-direction: column; gap: 2px; opacity: .55; }
+.ward.own { opacity: 1; border-color: var(--gold-dark); background: #241e0c; }
+.ward .pic { font-size: 32px; }
+.ward b { font-size: 15px; }
+.ward small { color: var(--muted); }
+.result-mascot { display: flex; justify-content: center; margin: 6px 0; }
+.gift { color: var(--gold2); font-size: 20px; }
+
+/* ---------- Nghe hiểu ---------- */
+.choice-wrap { position: relative; display: flex; }
+.choice-wrap .choice { width: 100%; }
+.choice-say { position: absolute; top: 6px; right: 6px; z-index: 2; }
+.choice .clabel { display: block; font-size: 18px; font-weight: 700; color: #1a1300; margin-top: 2px; }
+.choices:not(.pics) .choice .clabel { color: inherit; }
+.choice .pic + .clabel { line-height: 1.2; }
+.story { background: #101010; border: 1px solid var(--gold-dark); border-radius: 16px; padding: 14px; }
+.story.boss { border-color: #ff7043; }
+.story-row { display: flex; align-items: center; gap: 14px; }
+.story-row .say-btn.big { width: 76px; height: 76px; font-size: 34px; }
+.story-text { flex: 1; }
+.story-en { font-size: 22px; font-weight: 700; color: var(--gold2); }
+.story-hidden { color: var(--muted); font-size: 18px; }
+.story-q { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); display: flex; align-items: center; gap: 10px; font-size: 22px; }
+.q-ask .say-btn { margin-left: 4px; }
+.choice-wrap .choice .pic { display: block; font-size: 44px; line-height: 1.15; }
+.choices.pics .choice-wrap .choice .pic { font-size: 64px; }
+@media (max-width: 600px) { .choices.pics .choice-wrap .choice .pic { font-size: 52px; } }

@@ -22,7 +22,7 @@ window.KE = window.KE || {};
 
   const subject = (id) => KE.subjects.find((s) => s.id === id);
   const lessonOf = (sub, id) => sub && sub.lessons.find((l) => l.id === id);
-  const unlocked = (sid, lid, i) => i === 0 || S.stars(sid, lid, i - 1) > 0;
+  const unlocked = () => true; // tất cả các màn đều mở sẵn
   const starStr = (n, max) => '★'.repeat(n) + '☆'.repeat((max || 3) - n);
   const lessonStars = (sid, L) => L.levels.reduce((a, _, i) => a + S.stars(sid, L.id, i), 0);
 
@@ -31,7 +31,7 @@ window.KE = window.KE || {};
     const lv = S.level();
     const sound = S.get().settings.sound !== false;
     document.getElementById('hud').innerHTML = `
-      <a href="#/" class="logo"><span class="logo-icon">🦉</span><span>Bé Vui Học</span></a>
+      <a href="#/" class="logo"><span class="logo-icon">${KE.mascot.svg(S.level().lv, 34)}</span><span>Bé Vui Học</span></a>
       <div class="hud-right">
         <div class="player" title="Điểm kinh nghiệm">
           <span class="lv">Cấp ${lv.lv}</span>
@@ -51,9 +51,10 @@ window.KE = window.KE || {};
     const lv = S.level();
     $app.innerHTML = `
       <section class="hero">
-        <div class="hero-owl">🦉</div>
+        <div class="hero-mascot">${KE.mascot.svg(lv.lv, 170)}</div>
+        <div class="mascot-name">Khỉ ${KE.mascot.NAME} · bạn đồng hành của bé</div>
         <h1>Chào bé! Hôm nay mình học gì nào?</h1>
-        <p>Học lý thuyết qua giọng đọc, rồi vượt qua từng màn chơi để nhận <b>sao vàng</b> và <b>lên cấp</b>.</p>
+        <p>Chơi qua từng màn để nhận <b>sao vàng</b>, <b>lên cấp</b> và tặng quà cho khỉ ${KE.mascot.NAME}!</p>
         <div class="hero-stats">
           <div><b>Cấp ${lv.lv}</b><span>Cấp độ</span></div>
           <div><b>${S.get().xp}</b><span>Điểm XP</span></div>
@@ -69,7 +70,11 @@ window.KE = window.KE || {};
             <div class="subject-desc">${esc(s.desc)}</div>
             ${s.comingSoon ? '<span class="badge">Sắp ra mắt</span>' : ''}
           </a>`).join('')}
-      </div>`;
+      </div>
+      <h2 class="section-title">🎁 Tủ đồ của ${KE.mascot.NAME}</h2>
+      <p class="hint">${(() => { const n = KE.mascot.next(lv.lv); return n ? `Lên <b>cấp ${n.lv}</b> để tặng ${KE.mascot.NAME} món <b>${n.name}</b> ${n.icon}. Mỗi câu đúng được +10 XP, câu đúng ở màn Boss được +20 XP.` : `${KE.mascot.NAME} đã có đủ mọi món đồ. Bé thật giỏi!`; })()}</p>
+      <div class="wardrobe">${KE.mascot.ITEMS.map((it) => `<div class="ward ${lv.lv >= it.lv ? 'own' : ''}"><span class="pic">${lv.lv >= it.lv ? it.icon : '🔒'}</span><b>${it.name}</b><small>Cấp ${it.lv}</small></div>`).join('')}</div>
+`;
   }
 
   /* ---------- Danh sách bài học ---------- */
@@ -124,7 +129,7 @@ window.KE = window.KE || {};
 
       <section class="panel">
         <div class="panel-head"><h2>🎮 Chơi qua màn</h2></div>
-        <p class="hint">${sub.levelHint || 'Trả lời đúng ít nhất 3/5 câu để mở khoá màn tiếp theo. Đúng hết 5 câu được 3 sao! Vượt qua 5 màn sẽ gặp 3 Boss với các bài toán tư duy.'}</p>
+        <p class="hint">${sub.levelHint || 'Tất cả các màn đều mở sẵn, bé giỏi có thể thử Boss ngay. Đúng 3/5 câu là qua màn, đúng hết 5 câu được 3 sao! 3 màn Boss là các bài toán tư duy khó hơn.'}</p>
         <div class="level-map">${levels}</div>
       </section>`;
 
@@ -172,13 +177,18 @@ window.KE = window.KE || {};
           <div class="q-prompt ${q.small ? 'text' : ''}">${q.prompt}</div>
           ${q.visual || ''}
           <div class="choices ${q.choices.length === 3 ? 'three' : ''} ${q.pics ? 'pics' : ''} ${q.words ? 'words' : ''}">
-            ${q.choices.map((c) => `<button class="choice" data-v="${esc(c)}">${q.pics ? `<span class="pic">${esc(c)}</span>` : esc(c)}</button>`).join('')}
+            ${(q.choiceItems || q.choices.map((c) => ({ v: c, say: q.sayChoices ? c : '', html: q.pics ? `<span class="pic">${esc(c)}</span>` : esc(c) })))
+              .map((it) => `<div class="choice-wrap"><button class="choice" data-v="${esc(it.v)}">${it.html}</button>${it.say ? `<button class="say-btn small choice-say" data-say="${esc(it.say)}" data-lang="${sub.lang}" aria-label="Nghe đáp án">🔊</button>` : ''}</div>`).join('')}
           </div>
           <div id="feedback"></div>
         </section>`;
       if (q.say) document.getElementById('btn-say').onclick = () => KE.speech.speak(q.say, { lang: sub.lang, rate: 0.85 });
-      if (q.autoSay) setTimeout(() => KE.speech.speak(q.autoSay, { lang: sub.lang, rate: 0.85 }), 250);
+      if (q.autoSay) setTimeout(() => KE.speech.speakList([].concat(q.autoSay), { lang: sub.lang, rate: 0.85 }), 250);
       else if (S.get().settings.autoRead && q.say) KE.speech.speak(q.say, { lang: sub.lang });
+      /* Bé chưa biết đọc: thêm nút loa đọc câu hướng dẫn tiếng Việt */
+      $app.querySelectorAll('.q-ask').forEach((el) => {
+        el.insertAdjacentHTML('beforeend', ` <button class="say-btn small" data-say="${esc(el.textContent.trim())}" data-lang="vi-VN" aria-label="Nghe hướng dẫn">🔊</button>`);
+      });
       $app.querySelectorAll('.choice').forEach((b) => { b.onclick = () => answer(b, q); });
     }
 
@@ -200,7 +210,7 @@ window.KE = window.KE || {};
       document.getElementById('feedback').innerHTML = `
         <div class="feedback ${ok ? 'ok' : 'bad'}">
           <div class="fb-title">${ok ? '🎉 ' + praise : '💪 Chưa đúng rồi, cố lên nhé!'}</div>
-          <div class="fb-answer">Đáp án đúng: <b class="${q.pics ? 'pic' : ''}">${esc(q.answer)}</b></div>
+          <div class="fb-answer">Đáp án đúng: <b class="${q.pics ? 'pic' : ''}">${q.answerHtml || esc(q.answer)}</b></div>
           <details class="fb-explain" ${ok && !sub.noTheory ? '' : 'open'}>
             <summary>💡 Xem giải thích</summary>
             <div>${q.explain}</div>
@@ -230,11 +240,13 @@ window.KE = window.KE || {};
           <div class="big-stars">${[0, 1, 2].map((k) => `<span class="${k < stars ? 'on' : ''}" style="animation-delay:${k * 0.25}s">★</span>`).join('')}</div>
           <h1>${stars === 3 ? 'Xuất sắc!' : stars === 2 ? 'Rất tốt!' : stars === 1 ? 'Qua màn rồi!' : 'Chưa qua màn, thử lại nhé!'}</h1>
           <p>Bé trả lời đúng <b>${c}/${n}</b> câu và nhận <b>+${xp} XP</b>.</p>
-          ${lvAfter > lvBefore ? `<div class="levelup">🎊 Lên cấp ${lvAfter}! 🎊</div>` : ''}
+          ${lvAfter > lvBefore ? `<div class="levelup">🎊 Lên cấp ${lvAfter}! 🎊</div>
+            <div class="result-mascot">${KE.mascot.svg(lvAfter, 150)}</div>
+            ${(() => { const got = KE.mascot.ITEMS.filter((it) => it.lv > lvBefore && it.lv <= lvAfter); return got.length ? `<p class="gift">${KE.mascot.NAME} nhận được quà mới: ${got.map((it) => `<b>${it.icon} ${it.name}</b>`).join(', ')}!</p>` : ''; })()}` : ''}
           <div class="result-btns">
             <a class="btn" href="#/s/${sid}/l/${lid}">📖 Về bài học</a>
             <button class="btn" id="btn-again">🔁 Chơi lại</button>
-            ${stars && hasNext ? `<a class="btn gold" href="#/s/${sid}/l/${lid}/p/${lvIdx + 1}">Màn tiếp theo ➜</a>` : ''}
+            ${hasNext ? `<a class="btn gold" href="#/s/${sid}/l/${lid}/p/${lvIdx + 1}">Màn tiếp theo ➜</a>` : ''}
           </div>
         </section>`;
       document.getElementById('btn-again').onclick = () => viewPlay(sid, lid, lvIdx);

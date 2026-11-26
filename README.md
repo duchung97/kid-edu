@@ -19,7 +19,7 @@ Mỗi bài gồm:
 
 Nút **‹ Quay lại** cố định dưới màn hình đưa bé về menu ngay trước đó.
 
-Đúng ≥ 3/5 câu để mở khoá màn tiếp theo, đúng 5/5 được 3 sao. Mỗi câu đúng +10 XP để bé lên cấp. Tiến độ lưu trong trình duyệt của máy (localStorage).
+Đúng ≥ 3/5 câu là qua màn, đúng 5/5 được 3 sao. Mỗi câu đúng +10 XP để bé lên cấp. Tiến độ lưu trong trình duyệt của máy (localStorage).
 
 ## Tiếng Anh: từ vựng theo 15 chủ đề
 
@@ -32,6 +32,16 @@ Màn chơi: Học từ mới (2 phần) → Nghe và chọn hình → Điền v�
 Dữ liệu từ vựng nằm trong `js/subjects/english-data.js`, mỗi dòng một từ, rất dễ thêm chủ đề mới.
 
 **Hình ảnh**: dùng bộ emoji màu [Noto Color Emoji](https://github.com/googlefonts/noto-emoji) của Google (giấy phép SIL Open Font License), tải qua Google Fonts.
+
+## Tiếng Anh phần 2: Nghe hiểu
+
+6 chủ đề (Gia đình, Con vật, Đồ ăn, Thời tiết và màu sắc, Ở trường, Hoạt động hằng ngày). Mỗi câu: nghe một câu nói, nghe câu hỏi rồi chọn đáp án có hình. Vì bé chưa biết đọc nên **câu nói, câu hỏi, từng đáp án và câu hướng dẫn đều có nút 🔊**. Màn Boss là các đoạn dài 2 – 3 câu, chỉ nghe không hiện chữ.
+
+## Linh vật khỉ Bon
+
+Chú khỉ Bon do Bé Vui Học tự vẽ bằng SVG (`js/core/mascot.js`). Bé lên cấp thì Bon được tặng đồ: khăn quàng (cấp 2), áo gile (3), ủng (4), áo choàng (5), huy hiệu (6), vương miện (7), gậy phép (8), hào quang (9), tàu vũ trụ (10), vũ trụ lấp lánh (12).
+
+Tất cả các màn đều mở sẵn, bé giỏi có thể thử màn khó và Boss ngay từ đầu.
 
 ## Giọng đọc tiếng Việt
 
