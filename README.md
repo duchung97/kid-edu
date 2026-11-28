@@ -36,7 +36,7 @@ Dữ liệu từ vựng nằm trong `js/subjects/english-data.js`, mỗi dòng m
 
 ## Tiếng Anh phần 2: Nghe hiểu
 
-6 chủ đề (Gia đình, Con vật, Đồ ăn, Thời tiết và màu sắc, Ở trường, Hoạt động hằng ngày). Mỗi câu: nghe một câu nói, nghe câu hỏi rồi chọn đáp án có hình. Vì bé chưa biết đọc nên **câu nói, câu hỏi, từng đáp án và câu hướng dẫn đều có nút 🔊**. Màn Boss là các đoạn dài 2 – 3 câu, chỉ nghe không hiện chữ.
+6 chủ đề (Gia đình, Con vật, Đồ ăn, Thời tiết và màu sắc, Ở trường, Hoạt động hằng ngày), mỗi chủ đề 9 câu thường và 5 câu Boss (bộ câu hỏi mới từ 28/11/2026, khó hơn bộ cũ khoảng 50%). Mỗi câu: nghe một câu nói, nghe câu hỏi rồi chọn đáp án có hình. Câu nói dài hơn, đáp án sai thường cũng xuất hiện trong câu để bé phải nghe kỹ, có câu phủ định, so sánh, thứ tự việc làm và cộng trừ nhẩm. Vì bé chưa biết đọc nên **câu nói, câu hỏi, từng đáp án và câu hướng dẫn đều có nút 🔊**. Chữ chỉ hiện ở màn 1 và một phần màn 2; từ màn 4 đã có đoạn Boss; màn Boss chỉ nghe, không hiện chữ.
 
 ## Tiếng Anh phần 3: 15 trò chơi vui
 

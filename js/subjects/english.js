@@ -239,13 +239,13 @@ KE.subjects = KE.subjects || [];
       const pickN = (arr, n) => shuffle(arr).slice(0, n);
       const plan = [
         { title: 'Nghe và đọc', icon: '🚀', build: () => pickN(items, 5).map((x) => listenQ(x, true)) },
-        { title: 'Nghe và đọc (tiếp)', icon: '⚡', build: () => pickN(items, 5).map((x) => listenQ(x, true)) },
+        { title: 'Nghe là chính', icon: '⚡', build: () => pickN(items, 5).map((x, i) => listenQ(x, i < 2)) },
         { title: 'Chỉ nghe', icon: '🎧', build: () => pickN(items, 5).map((x) => listenQ(x, false)) },
-        { title: 'Chỉ nghe (tiếp)', icon: '👂', build: () => pickN(items, 5).map((x) => listenQ(x, false)) },
-        { title: 'Thử thách Vàng', icon: '🏆', build: () => pickN(items, 5).map((x) => listenQ(x, Math.random() < 0.3)) },
-        { title: 'Đấu Boss 1', icon: '👾', boss: true, build: () => shuffle([...pickN(boss, 2).map((x) => listenQ(x, true, true)), ...pickN(items, 3).map((x) => listenQ(x, false))]) },
-        { title: 'Đấu Boss 2', icon: '🐲', boss: true, build: () => shuffle([...pickN(boss, 3).map((x) => listenQ(x, false, true)), ...pickN(items, 2).map((x) => listenQ(x, false))]) },
-        { title: 'Đấu Boss 3', icon: '👹', boss: true, build: () => shuffle([...pickN(boss, 4).map((x) => listenQ(x, false, true)), ...pickN(items, 1).map((x) => listenQ(x, false))]) },
+        { title: 'Chỉ nghe (tiếp)', icon: '👂', build: () => shuffle([...pickN(items, 4).map((x) => listenQ(x, false)), ...pickN(boss, 1).map((x) => listenQ(x, true, true))]) },
+        { title: 'Thử thách Vàng', icon: '🏆', build: () => shuffle([...pickN(items, 3).map((x) => listenQ(x, false)), ...pickN(boss, 2).map((x) => listenQ(x, false, true))]) },
+        { title: 'Đấu Boss 1', icon: '👾', boss: true, build: () => shuffle([...pickN(boss, 3).map((x) => listenQ(x, false, true)), ...pickN(items, 2).map((x) => listenQ(x, false))]) },
+        { title: 'Đấu Boss 2', icon: '🐲', boss: true, build: () => shuffle([...pickN(boss, 4).map((x) => listenQ(x, false, true)), ...pickN(items, 1).map((x) => listenQ(x, false))]) },
+        { title: 'Đấu Boss 3', icon: '👹', boss: true, build: () => pickN(boss, 5).map((x) => listenQ(x, false, true)) },
       ];
       return { id: t.id, group: 'listen', grade: t.en, icon: t.icon, title: t.title, levels: plan };
     });

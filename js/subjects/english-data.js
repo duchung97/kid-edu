@@ -252,92 +252,110 @@ gray|/ɡreɪ/|màu xám|🩶|The elephant is gray.|Con voi màu xám.`,
 KE.listeningTopics = [
   {
     id: 'nghe-gia-dinh', title: 'Gia đình của em', en: 'My family', icon: '👪', items: `
-This is my mother. She is a teacher.|Đây là mẹ tôi. Mẹ là giáo viên.|Who is she?|Cô ấy là ai?|mother~👩~mẹ|father~👨|baby~👶|grandmother~👵
-My baby brother is sleeping.|Em trai nhỏ của tôi đang ngủ.|What is the baby doing?|Em bé đang làm gì?|sleeping~😴~đang ngủ|eating~🍽️|running~🏃|singing~🎤
-I have two sisters.|Tôi có hai chị em gái.|How many sisters do I have?|Tôi có mấy chị em gái?|two~2️⃣~hai|one~1️⃣|three~3️⃣|four~4️⃣
-My grandfather reads the newspaper.|Ông tôi đọc báo.|What does grandfather read?|Ông đọc gì?|the newspaper~📰~tờ báo|a map~🗺️|a phone~📱|a cake~🍰
-My father is tall. He wears glasses.|Bố tôi cao. Bố đeo kính.|What does father wear?|Bố đeo gì?|glasses~👓~kính|a hat~👒|a cap~🧢|a scarf~🧣
-Today is my birthday. I am seven.|Hôm nay là sinh nhật tôi. Tôi bảy tuổi.|How old am I?|Tôi bao nhiêu tuổi?|seven~7️⃣~bảy tuổi|six~6️⃣|eight~8️⃣|five~5️⃣
-My mother cooks fish for dinner.|Mẹ tôi nấu cá cho bữa tối.|What does mother cook?|Mẹ nấu món gì?|fish~🐟~cá|chicken~🍗|noodles~🍜|pizza~🍕`,
+My sister is nine and my brother is six. My brother is younger.|Chị gái tôi chín tuổi và em trai tôi sáu tuổi. Em trai tôi nhỏ tuổi hơn.|How old is my brother?|Em trai tôi bao nhiêu tuổi?|six~6️⃣~sáu tuổi|nine~9️⃣|seven~7️⃣|three~3️⃣
+My mother is a doctor, and my father is a cook.|Mẹ tôi là bác sĩ, còn bố tôi là đầu bếp.|What does my father do?|Bố tôi làm nghề gì?|a cook~🧑‍🍳~đầu bếp|a doctor~🧑‍⚕️|a teacher~🧑‍🏫|a farmer~🧑‍🌾
+Grandma wears a red scarf. Grandpa wears a brown hat.|Bà quàng khăn đỏ. Ông đội mũ nâu.|What does Grandpa wear?|Ông đội gì?|a brown hat~🎩~mũ nâu|a red scarf~🧣|glasses~👓|a blue cap~🧢
+There are five people in my family: my parents, my two brothers and me.|Gia đình tôi có năm người: bố mẹ, hai anh trai và tôi.|How many people are in my family?|Gia đình tôi có mấy người?|five~5️⃣~năm người|two~2️⃣|three~3️⃣|four~4️⃣
+My aunt lives in Da Nang. We visit her every summer.|Cô tôi sống ở Đà Nẵng. Mùa hè nào chúng tôi cũng đến thăm cô.|When do we visit my aunt?|Khi nào chúng tôi đến thăm cô?|every summer~☀️~mỗi mùa hè|every winter~❄️|every Monday~📅|every night~🌙
+My cousin Ben is taller than me, but I am faster than him.|Anh họ Ben cao hơn tôi, nhưng tôi chạy nhanh hơn anh ấy.|Who is taller?|Ai cao hơn?|Ben~🧑~anh họ Ben|me~🧒|my sister~👧|my dad~👨
+Dad is washing the car, and Mom is watering the flowers.|Bố đang rửa xe, còn mẹ đang tưới hoa.|What is Mom doing?|Mẹ đang làm gì?|watering the flowers~🌷~tưới hoa|washing the car~🚗|cooking dinner~🍳|reading a book~📖
+My baby sister can't walk yet, but she can say Mama.|Em gái nhỏ của tôi chưa biết đi, nhưng em ấy biết nói "Mama".|What can the baby do?|Em bé làm được gì?|say Mama~🗣️~nói "Mama"|walk~🚶|swim~🏊|read~📖
+My grandparents live with us. Grandpa helps me with my homework.|Ông bà sống cùng chúng tôi. Ông giúp tôi làm bài tập.|Who helps me with my homework?|Ai giúp tôi làm bài tập?|Grandpa~👴~ông|Grandma~👵|Mom~👩|my brother~👦`,
     boss: `
-Hello! I am Nam. I live with my mother, my father and my little sister.|Xin chào! Mình là Nam. Mình sống cùng mẹ, bố và em gái nhỏ.|Who does Nam live with?|Nam sống cùng ai?|his family~👨‍👩‍👧~gia đình|his friends~🧑‍🤝‍🧑|his teacher~🧑‍🏫|his dog~🐶
-My grandmother has a garden. She grows flowers and tomatoes.|Bà tôi có một khu vườn. Bà trồng hoa và cà chua.|What does grandmother grow?|Bà trồng gì?|flowers and tomatoes~🌸🍅~hoa và cà chua|apples and bananas~🍎🍌|rice and corn~🌾🌽|carrots and potatoes~🥕🥔
-My brother is ten. He likes football. He plays every Sunday.|Anh tôi mười tuổi. Anh ấy thích bóng đá. Anh ấy chơi vào mỗi Chủ nhật.|What does my brother like?|Anh trai thích gì?|football~⚽~bóng đá|tennis~🎾|swimming~🏊|chess~♟️
-It is Sunday. My family goes to the beach. We swim and eat ice cream.|Hôm nay là Chủ nhật. Gia đình tôi đi biển. Chúng tôi bơi và ăn kem.|Where does the family go?|Gia đình đi đâu?|the beach~🏖️~bãi biển|the zoo~🦁|the school~🏫|the hospital~🏥`,
+Lan has two brothers and one sister. Her sister is the youngest. Her brothers are twins.|Lan có hai anh trai và một em gái. Em gái là người nhỏ nhất. Hai anh trai là anh em sinh đôi.|How many children are in Lan's family?|Nhà Lan có mấy người con?|four~4️⃣~bốn (Lan, hai anh trai và em gái)|three~3️⃣|two~2️⃣|five~5️⃣
+On Sunday morning, Dad cooks breakfast. In the afternoon, Mom takes us to the park. In the evening, we all watch a film.|Sáng Chủ nhật, bố nấu bữa sáng. Buổi chiều, mẹ đưa chúng tôi đi công viên. Buổi tối, cả nhà xem phim.|What do we do in the afternoon?|Buổi chiều chúng tôi làm gì?|go to the park~🏞️~đi công viên|cook breakfast~🍳|watch a film~🎬|go to school~🏫
+My grandmother is seventy years old. My grandfather is five years older than her.|Bà tôi bảy mươi tuổi. Ông tôi hơn bà năm tuổi.|How old is my grandfather?|Ông tôi bao nhiêu tuổi?|seventy-five~7️⃣5️⃣~bảy mươi lăm tuổi (70 + 5)|seventy~7️⃣0️⃣|sixty-five~6️⃣5️⃣|eighty~8️⃣0️⃣
+My uncle is a pilot. He flies to many countries. He always brings me a small gift.|Chú tôi là phi công. Chú bay đến nhiều nước. Chú luôn mang cho tôi một món quà nhỏ.|What does my uncle always bring me?|Chú luôn mang cho tôi gì?|a small gift~🎁~một món quà nhỏ|a big plane~✈️|a letter~✉️|a pet~🐶
+Mom is not at home. She is shopping. Dad is at home, but he is sleeping. So I play with my dog.|Mẹ không ở nhà, mẹ đang đi mua sắm. Bố ở nhà nhưng đang ngủ. Vì vậy tôi chơi với con chó.|Who do I play with?|Tôi chơi với ai?|my dog~🐶~con chó|Mom~👩|Dad~👨|my friend~🧒`,
   },
   {
     id: 'nghe-con-vat', title: 'Các con vật', en: 'Animals', icon: '🐒', items: `
-The cat is under the table.|Con mèo ở dưới gầm bàn.|Which animal is under the table?|Con vật nào ở dưới gầm bàn?|the cat~🐱~con mèo|the dog~🐶|the rabbit~🐰|the bird~🐦
-A duck can swim.|Con vịt có thể bơi.|What can a duck do?|Con vịt có thể làm gì?|swim~🏊~bơi|sing~🎤|read~📖|cook~🧑‍🍳
-The elephant is big and gray.|Con voi to và có màu xám.|What color is the elephant?|Con voi màu gì?|gray~🩶~màu xám|pink~🩷|green~🟢|yellow~🟡
-The monkey likes bananas.|Con khỉ thích chuối.|What does the monkey like?|Con khỉ thích gì?|bananas~🍌~chuối|apples~🍎|carrots~🥕|fish~🐟
-I have a rabbit. It has long ears.|Tôi có một con thỏ. Nó có đôi tai dài.|What pet do I have?|Tôi nuôi con gì?|a rabbit~🐰~con thỏ|a cat~🐱|a fish~🐟|a dog~🐶
-The bird is in the tree.|Con chim ở trên cây.|Where is the bird?|Con chim ở đâu?|in the tree~🌳~trên cây|in the water~🌊|in the house~🏠|in the car~🚗
-A cow says moo.|Con bò kêu "moo".|Which animal says moo?|Con vật nào kêu "moo"?|the cow~🐄~con bò|the pig~🐷|the duck~🦆|the dog~🐶`,
+The cat is on the sofa, and the dog is under the bed.|Con mèo ở trên ghế sô-pha, còn con chó ở dưới gầm giường.|Where is the dog?|Con chó ở đâu?|under the bed~🛏️~dưới gầm giường|on the sofa~🛋️|in the garden~🌻|in the box~📦
+A giraffe has a very long neck, so it can eat leaves from tall trees.|Hươu cao cổ có cái cổ rất dài nên nó ăn được lá trên cây cao.|What does a giraffe eat?|Hươu cao cổ ăn gì?|leaves~🍃~lá cây|fish~🐟|meat~🍖|bananas~🍌
+A penguin is a bird, but it can't fly. It can swim very well.|Chim cánh cụt là một loài chim nhưng nó không bay được. Nó bơi rất giỏi.|What can't a penguin do?|Chim cánh cụt không làm được gì?|fly~🕊️~bay|swim~🏊|walk~🚶|eat fish~🐟
+There are four ducks in the pond and two ducks on the grass.|Có bốn con vịt dưới ao và hai con vịt trên cỏ.|How many ducks are there?|Có tất cả bao nhiêu con vịt?|six~6️⃣~sáu (4 + 2)|four~4️⃣|two~2️⃣|eight~8️⃣
+The tiger is sleeping, but the lion is eating meat.|Con hổ đang ngủ, còn con sư tử đang ăn thịt.|Which animal is eating?|Con vật nào đang ăn?|the lion~🦁~con sư tử|the tiger~🐯|the bear~🐻|the zebra~🦓
+My hamster is small and white. It sleeps in the day and plays at night.|Con chuột hamster của tôi nhỏ và màu trắng. Nó ngủ ban ngày và chơi vào ban đêm.|When does my hamster play?|Khi nào chuột hamster chơi?|at night~🌙~vào ban đêm|in the morning~🌅|at noon~☀️|after lunch~🍱
+A horse is bigger than a sheep, and a mouse is the smallest.|Con ngựa to hơn con cừu, và con chuột là nhỏ nhất.|Which animal is the smallest?|Con vật nào nhỏ nhất?|the mouse~🐭~con chuột|the horse~🐴|the sheep~🐑|the cow~🐄
+Bees make honey. Cows give us milk. Hens give us eggs.|Ong làm ra mật. Bò cho chúng ta sữa. Gà mái cho chúng ta trứng.|What do cows give us?|Bò cho chúng ta gì?|milk~🥛~sữa|honey~🍯|eggs~🥚|wool~🧶
+The dolphin is jumping out of the water. Everyone is clapping.|Con cá heo đang nhảy lên khỏi mặt nước. Mọi người đang vỗ tay.|What is the dolphin doing?|Cá heo đang làm gì?|jumping~🐬~nhảy lên|sleeping~😴|eating~🍽️|clapping~👏`,
     boss: `
-At the zoo, I see a lion, a tiger and two monkeys. The monkeys are funny.|Ở sở thú, tôi thấy một con sư tử, một con hổ và hai con khỉ. Những con khỉ rất buồn cười.|Which animals are funny?|Con vật nào buồn cười?|the monkeys~🐒~những con khỉ|the lion~🦁|the tiger~🐯|the elephant~🐘
-My dog is brown. His name is Lucky. He likes to run in the park.|Con chó của tôi màu nâu. Tên nó là Lucky. Nó thích chạy trong công viên.|Where does Lucky like to run?|Lucky thích chạy ở đâu?|in the park~🏞️~trong công viên|at school~🏫|on the beach~🏖️|in the kitchen~🍳
-The fish lives in water. The bird lives in a nest. The rabbit lives in a hole.|Con cá sống dưới nước. Con chim sống trong tổ. Con thỏ sống trong hang.|Where does the bird live?|Con chim sống ở đâu?|in a nest~🪺~trong tổ|in water~💧|in a hole~🕳️|in a house~🏠
-On the farm, there are three pigs and five chickens.|Ở nông trại có ba con lợn và năm con gà.|How many chickens are there?|Có bao nhiêu con gà?|five~5️⃣~năm|three~3️⃣|eight~8️⃣|two~2️⃣`,
+I have three pets: a cat, a parrot and a goldfish. The parrot can talk. The cat likes to sleep in the sun.|Tôi có ba con vật nuôi: một con mèo, một con vẹt và một con cá vàng. Con vẹt biết nói. Con mèo thích ngủ dưới nắng.|Which pet can talk?|Con vật nào biết nói?|the parrot~🦜~con vẹt|the cat~🐱|the goldfish~🐠|the dog~🐶
+On the farm, there are five cows and three horses. The farmer buys two more horses.|Ở nông trại có năm con bò và ba con ngựa. Bác nông dân mua thêm hai con ngựa.|How many horses are there now?|Bây giờ có mấy con ngựa?|five~5️⃣~năm con (3 + 2)|three~3️⃣|two~2️⃣|seven~7️⃣
+The rabbit is faster than the turtle. But the turtle doesn't stop, and the rabbit sleeps under a tree.|Thỏ chạy nhanh hơn rùa. Nhưng rùa không dừng lại, còn thỏ thì ngủ dưới gốc cây.|Who sleeps under a tree?|Ai ngủ dưới gốc cây?|the rabbit~🐰~con thỏ|the turtle~🐢|the bird~🐦|the fox~🦊
+At the zoo, the monkeys are in the trees, the bears are in the cave, and the crocodiles are in the river.|Ở sở thú, khỉ ở trên cây, gấu ở trong hang, còn cá sấu ở dưới sông.|Where are the bears?|Gấu ở đâu?|in the cave~🪨~trong hang|in the trees~🌳|in the river~🏞️|in the sky~☁️
+Kiki is my dog. She is black with white ears. She doesn't like cats, but she loves children.|Kiki là con chó của tôi. Nó màu đen với đôi tai trắng. Nó không thích mèo nhưng rất yêu trẻ con.|What doesn't Kiki like?|Kiki không thích gì?|cats~🐱~mèo|children~🧒|bones~🦴|walks~🚶`,
   },
   {
     id: 'nghe-do-an', title: 'Đồ ăn và đồ uống', en: 'Food and drinks', icon: '🍱', items: `
-I am thirsty. I want some water.|Tôi khát. Tôi muốn uống chút nước.|What do I want?|Tôi muốn gì?|water~💧~nước|bread~🍞|cake~🍰|rice~🍚
-For breakfast, I eat bread and eggs.|Bữa sáng tôi ăn bánh mì và trứng.|What do I eat for breakfast?|Bữa sáng tôi ăn gì?|bread and eggs~🍞🥚~bánh mì và trứng|rice and fish~🍚🐟|pizza~🍕|noodles~🍜
-My favorite fruit is the mango.|Loại quả tôi thích nhất là xoài.|What is my favorite fruit?|Quả tôi thích nhất là gì?|mango~🥭~xoài|apple~🍎|grapes~🍇|banana~🍌
-The ice cream is cold and sweet.|Kem lạnh và ngọt.|What is cold and sweet?|Cái gì lạnh và ngọt?|ice cream~🍦~kem|soup~🍲|bread~🍞|egg~🥚
-Mom buys three apples.|Mẹ mua ba quả táo.|How many apples does Mom buy?|Mẹ mua mấy quả táo?|three~3️⃣~ba|two~2️⃣|four~4️⃣|one~1️⃣
-I don't like milk. I like orange juice.|Tôi không thích sữa. Tôi thích nước cam.|What do I like?|Tôi thích gì?|orange juice~🧃~nước cam|milk~🥛|water~💧|tea~🍵
-We have noodles for lunch.|Chúng tôi ăn mì vào bữa trưa.|What do we have for lunch?|Bữa trưa chúng tôi ăn gì?|noodles~🍜~mì|a hamburger~🍔|cake~🍰|candy~🍬`,
+I'd like a glass of apple juice, not orange juice, please.|Cho tôi một cốc nước táo, không phải nước cam nhé.|What do I want to drink?|Tôi muốn uống gì?|apple juice~🍎~nước táo|orange juice~🍊|milk~🥛|tea~🍵
+There are six eggs in the box. Mom uses two eggs for a cake.|Có sáu quả trứng trong hộp. Mẹ dùng hai quả để làm bánh.|How many eggs are left?|Còn lại mấy quả trứng?|four~4️⃣~bốn quả (6 − 2)|six~6️⃣|two~2️⃣|eight~8️⃣
+Lemons are sour, but strawberries are sweet.|Chanh thì chua, còn dâu tây thì ngọt.|Which fruit is sour?|Quả nào chua?|lemons~🍋~quả chanh|strawberries~🍓|bananas~🍌|watermelons~🍉
+I eat cereal for breakfast and rice for dinner.|Tôi ăn ngũ cốc vào bữa sáng và ăn cơm vào bữa tối.|What do I eat for dinner?|Bữa tối tôi ăn gì?|rice~🍚~cơm|cereal~🥣|bread~🍞|pizza~🍕
+The soup is too hot. Wait a minute before you eat it.|Súp nóng quá. Đợi một phút rồi hãy ăn.|What is too hot?|Cái gì quá nóng?|the soup~🍲~bát súp|the ice cream~🍦|the juice~🧃|the salad~🥗
+My brother loves chocolate, but he can't eat it every day.|Em trai tôi rất thích sô-cô-la nhưng không được ăn mỗi ngày.|What does my brother love?|Em trai tôi thích gì?|chocolate~🍫~sô-cô-la|carrots~🥕|cheese~🧀|popcorn~🍿
+We need bread, cheese and tomatoes to make sandwiches.|Chúng ta cần bánh mì, phô mai và cà chua để làm bánh sandwich.|What are we making?|Chúng ta đang làm món gì?|sandwiches~🥪~bánh sandwich|pizza~🍕|soup~🍲|cake~🍰
+A banana costs two thousand dong, and an apple costs five thousand dong.|Một quả chuối giá hai nghìn đồng, một quả táo giá năm nghìn đồng.|Which fruit is cheaper?|Quả nào rẻ hơn?|the banana~🍌~quả chuối|the apple~🍎|the mango~🥭|the orange~🍊
+Don't drink cola. Drink water. It is good for you.|Đừng uống nước ngọt có ga. Hãy uống nước lọc. Nước lọc tốt cho bạn.|What is good for you?|Cái gì tốt cho bạn?|water~💧~nước lọc|cola~🥤|candy~🍬|chips~🍟`,
     boss: `
-It is Lan's birthday. There is a big cake with seven candles.|Hôm nay là sinh nhật Lan. Có một chiếc bánh lớn với bảy ngọn nến.|What is on the cake?|Trên bánh có gì?|candles~🕯️~nến|flowers~🌸|apples~🍎|stars~⭐
-Tom is hungry. He eats a hamburger and drinks milk.|Tom đói. Cậu ấy ăn một cái hamburger và uống sữa.|What does Tom drink?|Tom uống gì?|milk~🥛~sữa|juice~🧃|water~💧|tea~🍵
-I have rice, chicken and vegetables for dinner. I don't eat candy at night.|Bữa tối tôi ăn cơm, thịt gà và rau. Buổi tối tôi không ăn kẹo.|What don't I eat at night?|Buổi tối tôi không ăn gì?|candy~🍬~kẹo|rice~🍚|chicken~🍗|vegetables~🥦
-At the market, Mom buys fish, bananas and bread. She doesn't buy eggs.|Ở chợ, mẹ mua cá, chuối và bánh mì. Mẹ không mua trứng.|What doesn't Mom buy?|Mẹ không mua gì?|eggs~🥚~trứng|fish~🐟|bananas~🍌|bread~🍞`,
+At the party, there are ten cupcakes. Tom eats two and Lisa eats three.|Ở bữa tiệc có mười cái bánh nướng nhỏ. Tom ăn hai cái, Lisa ăn ba cái.|How many cupcakes are left?|Còn lại mấy cái bánh?|five~5️⃣~năm cái (10 − 2 − 3)|seven~7️⃣|eight~8️⃣|three~3️⃣
+For lunch, Nam wants noodles. His sister wants rice, but Mom says they will all eat pho.|Bữa trưa, Nam muốn ăn mì. Em gái muốn ăn cơm, nhưng mẹ bảo cả nhà sẽ ăn phở.|What will they eat for lunch?|Bữa trưa cả nhà sẽ ăn gì?|pho~🍜~phở|rice~🍚|bread~🍞|pizza~🍕
+First, wash the apples. Then, cut them into small pieces. Last, put them in a bowl with yogurt.|Đầu tiên, rửa táo. Sau đó, cắt táo thành miếng nhỏ. Cuối cùng, cho vào bát với sữa chua.|What do we do first?|Chúng ta làm gì đầu tiên?|wash the apples~🍎💧~rửa táo|cut the apples~🔪|eat the yogurt~🥣|buy a bowl~🛒
+My grandmother makes spring rolls every Tet. I help her. We make forty spring rolls.|Tết nào bà tôi cũng làm nem. Tôi giúp bà. Chúng tôi làm bốn mươi cái nem.|When does my grandmother make spring rolls?|Bà làm nem khi nào?|every Tet~🧧~mỗi dịp Tết|every Sunday~📅|every morning~🌅|every summer~☀️
+Ana doesn't like fish or meat. She eats vegetables, eggs and fruit.|Ana không thích cá và thịt. Bạn ấy ăn rau, trứng và hoa quả.|What doesn't Ana eat?|Ana không ăn gì?|meat~🍖~thịt|eggs~🥚|vegetables~🥦|fruit~🍇`,
   },
   {
     id: 'nghe-thoi-tiet', title: 'Thời tiết và màu sắc', en: 'Weather and colors', icon: '🌈', items: `
-It is raining. Take your umbrella.|Trời đang mưa. Hãy mang ô của bạn.|What is the weather like?|Thời tiết thế nào?|rainy~🌧️~trời mưa|sunny~☀️|snowy~🌨️|windy~🌬️
-The sun is hot today. Let's go swimming.|Hôm nay mặt trời nóng. Đi bơi thôi.|What is hot today?|Hôm nay cái gì nóng?|the sun~☀️~mặt trời|the moon~🌙|the snow~❄️|the ice cream~🍦
-My bag is green.|Cặp của tôi màu xanh lá.|What color is my bag?|Cặp của tôi màu gì?|green~🟢~xanh lá|red~🔴|blue~🔵|yellow~🟡
-It is cold. I wear my coat.|Trời lạnh. Tôi mặc áo khoác.|What do I wear?|Tôi mặc gì?|a coat~🧥~áo khoác|a T-shirt~👕|a dress~👗|shorts~🩳
-Look! There is a rainbow in the sky!|Nhìn kìa! Có cầu vồng trên trời!|What is in the sky?|Trên trời có gì?|a rainbow~🌈~cầu vồng|a plane~✈️|a bird~🐦|a balloon~🎈
-Her dress is pink.|Váy của cô ấy màu hồng.|What color is her dress?|Váy của cô ấy màu gì?|pink~🩷~màu hồng|purple~🟣|white~⚪|black~⚫
-It is windy. Let's fly a kite.|Trời có gió. Cùng thả diều nào.|What do we fly?|Chúng ta thả gì?|a kite~🪁~con diều|a plane~✈️|a bird~🐦|a balloon~🎈`,
+It was sunny yesterday, but today it is cloudy.|Hôm qua trời nắng, nhưng hôm nay trời nhiều mây.|What is the weather like today?|Hôm nay thời tiết thế nào?|cloudy~☁️~nhiều mây|sunny~☀️|snowy~🌨️|rainy~🌧️
+Mix blue and yellow, and you get green.|Trộn màu xanh dương với màu vàng sẽ được màu xanh lá.|What color do you get?|Bạn được màu gì?|green~🟢~xanh lá|blue~🔵|yellow~🟡|purple~🟣
+It is very hot, so I wear shorts and sunglasses.|Trời rất nóng nên tôi mặc quần soóc và đeo kính râm.|Why do I wear shorts?|Vì sao tôi mặc quần soóc?|it is hot~🥵~vì trời nóng|it is cold~🥶|it is rainy~🌧️|it is night~🌙
+My shoes are black, my socks are white, and my hat is orange.|Giày tôi màu đen, tất màu trắng, còn mũ màu cam.|What color are my socks?|Tất của tôi màu gì?|white~⚪~màu trắng|black~⚫|orange~🟠|brown~🟤
+It is snowing in the mountains. The trees are white.|Trên núi đang có tuyết rơi. Cây cối trắng xóa.|Where is it snowing?|Tuyết đang rơi ở đâu?|in the mountains~🏔️~trên núi|at the beach~🏖️|in the city~🏙️|in the desert~🏜️
+The wind is very strong. Close the window, please.|Gió rất mạnh. Hãy đóng cửa sổ lại.|What should we close?|Chúng ta nên đóng gì?|the window~🪟~cửa sổ|the door~🚪|the book~📕|the box~📦
+In spring, the weather is warm and the flowers open.|Mùa xuân, thời tiết ấm áp và hoa nở.|What is the weather like in spring?|Mùa xuân thời tiết thế nào?|warm~🌤️~ấm áp|cold~🥶|hot~🥵|snowy~🌨️
+Look at the sky. It is dark and gray. It is going to rain.|Nhìn bầu trời kìa. Trời tối và xám. Trời sắp mưa rồi.|What is going to happen?|Chuyện gì sắp xảy ra?|it is going to rain~🌧️~trời sắp mưa|it is going to snow~🌨️|the sun is coming out~🌞|it is going to be windy~🌬️
+My favorite color is purple. My best friend's favorite color is red.|Màu yêu thích của tôi là màu tím. Màu yêu thích của bạn thân tôi là màu đỏ.|What is my favorite color?|Màu yêu thích của tôi là gì?|purple~🟣~màu tím|red~🔴|pink~🩷|blue~🔵`,
     boss: `
-In winter, it is cold and snowy. Children make a snowman.|Mùa đông trời lạnh và có tuyết. Trẻ em làm người tuyết.|What do children make?|Trẻ em làm gì?|a snowman~☃️~người tuyết|a cake~🍰|a kite~🪁|a sandcastle~🏰
-I have a red ball, a blue car and a yellow duck.|Tôi có một quả bóng đỏ, một chiếc ô tô xanh dương và một con vịt vàng.|What color is the car?|Chiếc ô tô màu gì?|blue~🔵~xanh dương|red~🔴|yellow~🟡|green~🟢
-It is stormy tonight. There is thunder and lightning. I stay at home.|Tối nay có bão. Có sấm và chớp. Tôi ở nhà.|Where do I stay?|Tôi ở đâu?|at home~🏠~ở nhà|at school~🏫|at the beach~🏖️|at the zoo~🦁
-The sky is blue and the grass is green. The flowers are red and yellow.|Bầu trời xanh dương và cỏ xanh lá. Những bông hoa màu đỏ và vàng.|What color is the grass?|Cỏ màu gì?|green~🟢~xanh lá|blue~🔵|red~🔴|yellow~🟡`,
+In the morning, it is sunny. At noon, it is cloudy. In the evening, it starts to rain.|Buổi sáng trời nắng. Buổi trưa trời nhiều mây. Buổi tối trời bắt đầu mưa.|What is the weather like at noon?|Buổi trưa thời tiết thế nào?|cloudy~☁️~nhiều mây|sunny~☀️|rainy~🌧️|snowy~🌨️
+Mai has a red umbrella. Her brother has a blue one. Today she forgets her umbrella, so she uses her brother's.|Mai có một chiếc ô đỏ. Anh trai bạn ấy có một chiếc ô xanh dương. Hôm nay Mai quên ô nên dùng ô của anh.|What color is the umbrella Mai uses today?|Hôm nay Mai dùng ô màu gì?|blue~🔵~xanh dương (ô của anh trai)|red~🔴|green~🟢|yellow~🟡
+It is winter in London. It is two degrees. It is summer in Sydney. It is thirty degrees.|Ở London đang là mùa đông, trời hai độ. Ở Sydney đang là mùa hè, trời ba mươi độ.|Where is it hot?|Ở đâu trời nóng?|in Sydney~🏖️~ở Sydney|in London~🏙️|in the mountains~🏔️|at the North Pole~🧊
+The traffic light is red, so the cars stop. When it turns green, the cars go.|Đèn giao thông màu đỏ nên xe dừng lại. Khi đèn chuyển sang xanh, xe chạy.|What do the cars do at a red light?|Ở đèn đỏ xe làm gì?|stop~🛑~dừng lại|go~🚗|turn left~⬅️|fly~✈️
+I have a box of crayons. There are twelve colors, but the pink one is missing.|Tôi có một hộp bút sáp. Có mười hai màu nhưng thiếu cây màu hồng.|Which crayon is missing?|Cây bút sáp nào bị thiếu?|the pink one~🩷~cây màu hồng|the blue one~🔵|the black one~⚫|the green one~🟢`,
   },
   {
     id: 'nghe-truong-hoc', title: 'Ở trường', en: 'At school', icon: '🏫', items: `
-Open your book, please.|Hãy mở sách ra nào.|What do we open?|Chúng ta mở cái gì?|a book~📕~quyển sách|a door~🚪|a window~🪟|a bag~🎒
-I have two pencils and one ruler.|Tôi có hai bút chì và một thước kẻ.|How many pencils do I have?|Tôi có mấy bút chì?|two~2️⃣~hai|one~1️⃣|three~3️⃣|four~4️⃣
-My teacher writes on the board.|Cô giáo viết lên bảng.|Who writes on the board?|Ai viết lên bảng?|the teacher~🧑‍🏫~cô giáo|the doctor~🧑‍⚕️|the cook~🧑‍🍳|the pilot~🧑‍✈️
-Cut the paper with scissors.|Cắt giấy bằng kéo.|What do we use to cut paper?|Dùng gì để cắt giấy?|scissors~✂️~cái kéo|a pen~🖊️|a ruler~📏|a crayon~🖍️
-I go to school by bike.|Tôi đi học bằng xe đạp.|How do I go to school?|Tôi đi học bằng gì?|by bike~🚲~xe đạp|by bus~🚌|by car~🚗|on foot~🚶
-We sing a song in music class.|Chúng tôi hát một bài hát trong giờ âm nhạc.|What do we do in music class?|Giờ âm nhạc chúng tôi làm gì?|sing a song~🎤~hát|draw a picture~🎨|play football~⚽|read a book~📖
-It is time for lunch. Let's eat!|Đến giờ ăn trưa rồi. Cùng ăn nào!|What time is it?|Đến giờ gì rồi?|lunch time~🍱~giờ ăn trưa|bedtime~🛏️|play time~🧸|bath time~🛁`,
+We have math on Monday and English on Tuesday.|Chúng tôi học toán vào thứ Hai và tiếng Anh vào thứ Ba.|What do we have on Monday?|Thứ Hai chúng tôi học môn gì?|math~🔢~môn toán|English~🔤|music~🎵|art~🎨
+Please don't run in the classroom. Walk slowly.|Xin đừng chạy trong lớp học. Hãy đi chậm thôi.|What should we do in the classroom?|Trong lớp chúng ta nên làm gì?|walk slowly~🚶~đi chậm|run fast~🏃|jump~🤸|shout~📢
+There are twenty students in my class: twelve girls and eight boys.|Lớp tôi có hai mươi học sinh: mười hai bạn gái và tám bạn trai.|How many boys are there?|Có bao nhiêu bạn trai?|eight~8️⃣~tám|twelve~1️⃣2️⃣|twenty~2️⃣0️⃣|ten~🔟
+My pencil is broken. Can I borrow your pencil, please?|Bút chì của tôi bị gãy. Cho tôi mượn bút chì của bạn nhé?|What do I want to borrow?|Tôi muốn mượn gì?|a pencil~✏️~bút chì|a ruler~📏|a book~📕|a bag~🎒
+The library is next to the music room.|Thư viện ở cạnh phòng âm nhạc.|Where is the library?|Thư viện ở đâu?|next to the music room~🎵~cạnh phòng âm nhạc|next to the gym~🏀|next to the canteen~🍽️|next to the gate~🚪
+Our teacher is reading a story, and we are listening.|Cô giáo đang đọc truyện, còn chúng tôi đang lắng nghe.|What are we doing?|Chúng tôi đang làm gì?|listening~👂~lắng nghe|reading~📖|writing~✍️|sleeping~😴
+Put your books in your bag. It's time to go home.|Hãy cất sách vào cặp. Đến giờ về nhà rồi.|What time is it?|Đến giờ gì rồi?|time to go home~🏠~giờ về nhà|time for lunch~🍱|time for math~🔢|time for bed~🛏️
+I can't find my crayons. Are they under the desk?|Tôi không tìm thấy bút sáp màu. Chúng có ở dưới bàn không?|What can't I find?|Tôi không tìm thấy gì?|my crayons~🖍️~bút sáp màu|my desk~🪑|my bag~🎒|my book~📕
+In PE class, we run, jump and play games in the yard.|Trong giờ thể dục, chúng tôi chạy, nhảy và chơi trò chơi ngoài sân.|Where do we have PE class?|Giờ thể dục học ở đâu?|in the yard~🏟️~ngoài sân|in the library~📚|in the classroom~🏫|in the kitchen~🍳`,
     boss: `
-My school bag is heavy. There are four books, a pencil case and a bottle of water.|Cặp sách của tôi nặng. Trong cặp có bốn quyển sách, một hộp bút và một chai nước.|How many books are in my bag?|Trong cặp có mấy quyển sách?|four~4️⃣~bốn|two~2️⃣|one~1️⃣|three~3️⃣
-In art class, we draw a picture of the sea with crayons.|Trong giờ mỹ thuật, chúng tôi vẽ tranh biển bằng bút sáp màu.|What do we draw?|Chúng tôi vẽ gì?|the sea~🌊~biển|a house~🏠|a cat~🐱|a tree~🌳
-Minh is late for school. He runs very fast. The bell rings.|Minh bị muộn học. Bạn ấy chạy rất nhanh. Chuông reo.|Why does Minh run fast?|Vì sao Minh chạy nhanh?|he is late~⏰~bạn ấy bị muộn|he is hungry~🍔|he is sick~🤒|he is cold~🥶
-Mai has a new computer. She uses it to learn English every evening.|Mai có một chiếc máy tính mới. Bạn ấy dùng nó để học tiếng Anh mỗi tối.|What does Mai learn?|Mai học gì?|English~🔤~tiếng Anh|math~🔢|music~🎵|art~🎨`,
+Linh is the best student in math. Hai is good at drawing. Quan sings beautifully.|Linh học toán giỏi nhất. Hải vẽ giỏi. Quân hát rất hay.|Who is good at drawing?|Ai vẽ giỏi?|Hai~🎨~Hải|Linh~🔢|Quan~🎤|the teacher~🧑‍🏫
+School starts at seven o'clock. I leave home at half past six. It takes me twenty minutes to walk there.|Trường vào học lúc bảy giờ. Tôi rời nhà lúc sáu rưỡi. Tôi đi bộ đến trường mất hai mươi phút.|How do I go to school?|Tôi đến trường bằng cách nào?|on foot~🚶~đi bộ|by bus~🚌|by bike~🚲|by car~🚗
+There are thirty books on the shelf. The teacher gives ten books to the students.|Trên giá có ba mươi quyển sách. Cô giáo đưa mười quyển cho học sinh.|How many books are on the shelf now?|Bây giờ trên giá còn mấy quyển sách?|twenty~2️⃣0️⃣~hai mươi (30 − 10)|thirty~3️⃣0️⃣|ten~🔟|forty~4️⃣0️⃣
+Today we have a test. Minh studied last night, so he is not worried. Nga didn't study, so she is nervous.|Hôm nay có bài kiểm tra. Tối qua Minh đã học bài nên bạn ấy không lo. Nga không học nên bạn ấy hồi hộp.|Who is nervous?|Ai hồi hộp?|Nga~😰~Nga|Minh~😊|the teacher~🧑‍🏫|everyone~👥
+In the school garden, the class plants ten trees. Each tree has a name card. The tallest tree is a mango tree.|Trong vườn trường, cả lớp trồng mười cây. Mỗi cây có một tấm biển tên. Cây cao nhất là cây xoài.|Which tree is the tallest?|Cây nào cao nhất?|the mango tree~🥭~cây xoài|the apple tree~🍎|the banana tree~🍌|the coconut tree~🥥`,
   },
   {
     id: 'nghe-hang-ngay', title: 'Hoạt động hằng ngày', en: 'My day', icon: '⏰', items: `
-I wake up at six o'clock.|Tôi thức dậy lúc sáu giờ.|What time do I wake up?|Tôi dậy lúc mấy giờ?|six o'clock~🕕~sáu giờ|seven o'clock~🕖|eight o'clock~🕗|nine o'clock~🕘
-I brush my teeth every morning.|Tôi đánh răng mỗi sáng.|What do I brush every morning?|Mỗi sáng tôi chải gì?|my teeth~🦷~răng|my hair~💇|my dog~🐶|my shoes~👟
-My sister is swimming in the pool.|Em gái tôi đang bơi trong bể bơi.|What is my sister doing?|Em gái đang làm gì?|swimming~🏊~bơi|running~🏃|cycling~🚴|sleeping~😴
-Dad is reading a book on the sofa.|Bố đang đọc sách trên ghế sô-pha.|What is Dad doing?|Bố đang làm gì?|reading~📖~đọc sách|cooking~🍳|singing~🎤|dancing~💃
-We play badminton in the evening.|Chúng tôi chơi cầu lông vào buổi tối.|What do we play?|Chúng tôi chơi gì?|badminton~🏸~cầu lông|tennis~🎾|football~⚽|basketball~🏀
-I go to bed at nine o'clock.|Tôi đi ngủ lúc chín giờ.|What time do I go to bed?|Tôi đi ngủ lúc mấy giờ?|nine o'clock~🕘~chín giờ|six o'clock~🕕|seven o'clock~🕖|eight o'clock~🕗
-Mom is cooking in the kitchen.|Mẹ đang nấu ăn trong bếp.|Where is Mom?|Mẹ ở đâu?|in the kitchen~🍳~trong bếp|in the garden~🌻|in the bathroom~🛁|in the car~🚗`,
+I get up at half past six and have breakfast at seven.|Tôi dậy lúc sáu rưỡi và ăn sáng lúc bảy giờ.|What time do I have breakfast?|Tôi ăn sáng lúc mấy giờ?|seven o'clock~🕖~bảy giờ|half past six~🕡|six o'clock~🕕|eight o'clock~🕗
+After dinner, I wash the dishes and my sister cleans the table.|Sau bữa tối, tôi rửa bát còn em gái tôi lau bàn.|What does my sister do?|Em gái tôi làm gì?|clean the table~🧽~lau bàn|wash the dishes~🍽️|cook dinner~🍳|walk the dog~🐕
+I usually take the bus, but today Dad drives me to school.|Tôi thường đi xe buýt, nhưng hôm nay bố chở tôi đến trường bằng ô tô.|How do I go to school today?|Hôm nay tôi đến trường bằng gì?|by car~🚗~ô tô|by bus~🚌|by bike~🚲|on foot~🚶
+On Saturdays, I don't go to school. I visit my grandparents.|Thứ Bảy tôi không đi học. Tôi đi thăm ông bà.|What do I do on Saturdays?|Thứ Bảy tôi làm gì?|visit my grandparents~👴👵~thăm ông bà|go to school~🏫|go swimming~🏊|play games~🎮
+My brother is taking a shower. I am waiting for the bathroom.|Anh tôi đang tắm. Tôi đang đợi đến lượt vào phòng tắm.|What is my brother doing?|Anh tôi đang làm gì?|taking a shower~🚿~đang tắm|waiting~⏳|sleeping~😴|eating~🍽️
+I feed my fish in the morning and walk my dog in the evening.|Buổi sáng tôi cho cá ăn và buổi tối tôi dắt chó đi dạo.|When do I walk my dog?|Khi nào tôi dắt chó đi dạo?|in the evening~🌆~buổi tối|in the morning~🌅|at noon~☀️|at midnight~🌙
+Mom is tired, so I help her carry the shopping bags.|Mẹ mệt nên tôi giúp mẹ xách túi đồ.|Why do I help Mom?|Vì sao tôi giúp mẹ?|she is tired~😩~vì mẹ mệt|she is happy~😄|she is hungry~🍔|she is late~⏰
+I do my homework for one hour, then I play the piano.|Tôi làm bài tập một tiếng, sau đó tôi chơi đàn piano.|What do I do after my homework?|Sau khi làm bài tập tôi làm gì?|play the piano~🎹~chơi đàn piano|watch TV~📺|go to bed~🛏️|read a book~📖
+Before bed, I put on my pajamas and read a short story.|Trước khi ngủ, tôi mặc đồ ngủ và đọc một câu chuyện ngắn.|What do I read before bed?|Trước khi ngủ tôi đọc gì?|a short story~📖~một câu chuyện ngắn|a newspaper~📰|a letter~✉️|a map~🗺️`,
     boss: `
-On Saturday, I ride my bike in the park. Then I eat ice cream with my friends.|Thứ Bảy, tôi đạp xe trong công viên. Sau đó tôi ăn kem với các bạn.|What do I eat with my friends?|Tôi ăn gì với các bạn?|ice cream~🍦~kem|pizza~🍕|cake~🍰|candy~🍬
-After school, Hoa does her homework. Then she helps her mother cook dinner.|Sau giờ học, Hoa làm bài tập. Sau đó bạn ấy giúp mẹ nấu bữa tối.|What does Hoa do first?|Hoa làm gì trước?|her homework~📝~làm bài tập|cook dinner~🍳|play games~🎮|watch TV~📺
-It is raining, so we can't play outside. We watch a cartoon on TV.|Trời mưa nên chúng tôi không thể chơi ngoài trời. Chúng tôi xem phim hoạt hình trên ti vi.|What do we do?|Chúng tôi làm gì?|watch TV~📺~xem ti vi|play football~⚽|go swimming~🏊|ride a bike~🚲
-Every Sunday, my grandfather goes fishing at the lake. He catches two big fish.|Chủ nhật nào ông tôi cũng đi câu cá ở hồ. Ông câu được hai con cá to.|How many fish does he catch?|Ông câu được mấy con cá?|two~2️⃣~hai|one~1️⃣|three~3️⃣|five~5️⃣`,
+Lucy wakes up at seven. She has breakfast for fifteen minutes. Then she walks to school for fifteen minutes.|Lucy dậy lúc bảy giờ. Bạn ấy ăn sáng mất mười lăm phút. Sau đó đi bộ đến trường mất mười lăm phút.|What time does Lucy get to school?|Lucy đến trường lúc mấy giờ?|half past seven~🕢~bảy giờ rưỡi (7 giờ + 15 phút + 15 phút)|seven o'clock~🕖|eight o'clock~🕗|quarter past seven~⏱️
+Peter likes to swim, but the pool is closed today. So he goes to the library and reads about sharks.|Peter thích bơi, nhưng hôm nay bể bơi đóng cửa. Vì vậy bạn ấy đến thư viện và đọc sách về cá mập.|Where does Peter go today?|Hôm nay Peter đi đâu?|the library~📚~thư viện|the pool~🏊|the beach~🏖️|the zoo~🦁
+On Monday, I play football. On Wednesday, I have a swimming lesson. On Friday, I learn to draw.|Thứ Hai tôi chơi bóng đá. Thứ Tư tôi học bơi. Thứ Sáu tôi học vẽ.|What do I do on Wednesday?|Thứ Tư tôi làm gì?|have a swimming lesson~🏊~học bơi|play football~⚽|learn to draw~🎨|play the piano~🎹
+Mom gets home at six. Dad gets home at seven. We have dinner when everyone is home.|Mẹ về nhà lúc sáu giờ. Bố về nhà lúc bảy giờ. Cả nhà ăn tối khi mọi người đã về đủ.|What time do we have dinner?|Cả nhà ăn tối lúc mấy giờ?|seven o'clock~🕖~bảy giờ (khi bố đã về)|six o'clock~🕕|five o'clock~🕔|eight o'clock~🕗
+Today is a holiday. I wake up late, eat pancakes and go to the cinema with my cousins.|Hôm nay là ngày nghỉ. Tôi dậy muộn, ăn bánh kếp và đi xem phim với các anh chị em họ.|Who do I go to the cinema with?|Tôi đi xem phim với ai?|my cousins~🧑‍🤝‍🧑~các anh chị em họ|my teacher~🧑‍🏫|my parents~👫|my classmates~🏫`,
   },
 ];
